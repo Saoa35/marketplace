@@ -9,10 +9,10 @@ import {
 import {COLORS} from '../styles/styles';
 import {GreenButton} from '../components/buttons/GreenButton';
 
-function SignInScreen({navigation}) {
+function SignUpScreen() {
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.title}>Sign In</Text>
+      <Text style={styles.title}>Sign Up</Text>
 
       <View style={styles.iputContainer}>
         <View style={styles.inputWrapper}>
@@ -38,7 +38,7 @@ function SignInScreen({navigation}) {
 
         <View style={styles.bottomTextWrapper}>
           <Text style={styles.bottomText}>Don`t have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <TouchableOpacity>
             <Text style={styles.linkText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInScreen;
+export default SignUpScreen;
