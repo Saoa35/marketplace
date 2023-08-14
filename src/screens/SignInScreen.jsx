@@ -1,7 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {COLORS} from '../styles/styles';
-import {MainButton} from '../components/buttons/MainButton';
+import {GreenButton} from '../components/buttons/GreenButton';
 
 function SignInScreen() {
   return (
@@ -28,7 +34,14 @@ function SignInScreen() {
       </View>
 
       <View style={styles.bottomContainer}>
-        <MainButton />
+        <GreenButton name={'Sign In'} />
+
+        <View style={styles.bottomTextWrapper}>
+          <Text style={styles.bottomText}>Don`t have an account? </Text>
+          <TouchableOpacity>
+            <Text style={styles.linkText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -44,7 +57,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 70,
     textAlign: 'center',
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: '700',
   },
   iputContainer: {
@@ -65,6 +78,21 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     alignItems: 'center',
+    marginTop: 50,
+  },
+  bottomTextWrapper: {
+    marginTop: 20,
+    flexDirection: 'row',
+  },
+  bottomText: {
+    fontSize: 20,
+  },
+
+  linkText: {
+    fontSize: 20,
+    color: COLORS.green,
+    textDecorationLine: 'underline',
+    fontWeight: '700',
   },
 });
 

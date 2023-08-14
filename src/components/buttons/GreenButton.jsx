@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../styles/styles';
 
-export const MainButton = () => {
+export const GreenButton = ({name}) => {
   return (
     <TouchableOpacity style={styles.container}>
-      <Text style={styles.name}>Sign In</Text>
+      <Text style={styles.name}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   name: {
-    color: 'white',
-    fontSize: 22,
-    fontWeight: '500',
+    color: COLORS.buttonTextColor,
+    fontSize: 24,
+    fontWeight: '600',
   },
 });
