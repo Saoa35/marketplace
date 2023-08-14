@@ -59,6 +59,8 @@ function SignUpScreen({navigation}) {
   );
 }
 
+export default SignUpScreen;
+
 const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
@@ -107,5 +109,3 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-
-export default SignUpScreen;
