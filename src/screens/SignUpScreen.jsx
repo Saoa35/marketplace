@@ -9,18 +9,30 @@ import {
 import {COLORS} from '../styles/styles';
 import {GreenButton} from '../components/buttons/GreenButton';
 
-function SignUpScreen() {
+function SignUpScreen({navigation}) {
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.title}>Sign Up</Text>
 
       <View style={styles.iputContainer}>
         <View style={styles.inputWrapper}>
+          <Text style={styles.label}>Name</Text>
+          <TextInput placeholder="Enter your name" style={styles.input} />
+        </View>
+        <View style={styles.inputWrapper}>
           <Text style={styles.label}>Email</Text>
           <TextInput
             placeholder="Enter your email"
             style={styles.input}
             keyboardType="email-address"
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput
+            placeholder="Enter your phone number"
+            style={styles.input}
+            keyboardType="phone-pad"
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -34,12 +46,12 @@ function SignUpScreen() {
       </View>
 
       <View style={styles.bottomContainer}>
-        <GreenButton name={'Sign In'} />
+        <GreenButton name={'Sign Up'} />
 
         <View style={styles.bottomTextWrapper}>
-          <Text style={styles.bottomText}>Don`t have an account? </Text>
-          <TouchableOpacity>
-            <Text style={styles.linkText}>Sign Up</Text>
+          <Text style={styles.bottomText}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <Text style={styles.linkText}>Sign In</Text>
           </TouchableOpacity>
         </View>
       </View>
