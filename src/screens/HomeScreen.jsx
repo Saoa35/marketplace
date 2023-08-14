@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {COLORS} from '../styles/styles';
+import {ProductItem} from '../components/ProductItem';
 
 function HomeScreen() {
   return (
@@ -15,9 +16,13 @@ function HomeScreen() {
       <View style={styles.searchWrapper}>
         <EvilIcons
           name="search"
-          style={{fontSize: 25, marginLeft: 8, marginBottom: 3}}
+          style={{fontSize: 25, marginLeft: 8, marginBottom: 3, opacity: 0.6}}
         />
         <TextInput placeholder="Search" style={styles.searchInput} />
+      </View>
+
+      <View style={styles.listContainer}>
+        <ProductItem />
       </View>
     </View>
   );
@@ -35,6 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 30,
+    marginBottom: 35,
     backgroundColor: COLORS.buttonTextColor,
     borderRadius: 15,
     borderBottomWidth: 2,
@@ -53,5 +59,8 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     letterSpacing: 1,
     width: '70%',
+    opacity: 0.6,
+    color: COLORS.title,
   },
+  listContainer: {},
 });
