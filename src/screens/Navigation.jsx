@@ -10,6 +10,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {COLORS} from '../styles/styles';
 import ProductDetailsScreen from './ProductDetailsScreen';
+import {LeftArrowButton} from '../components/buttons/LeftArrowButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +35,7 @@ const TabNavigation = () => {
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />
+
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
@@ -51,7 +53,16 @@ const TabNavigation = () => {
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />
-      <Tab.Screen name="ProductDetails" component={ProductDetailsScreen} />
+
+      <Tab.Screen
+        name="ProductDetails"
+        component={ProductDetailsScreen}
+        options={() => ({
+          tabBarButton: () => null,
+          headerTitle: 'Product Details',
+          headerLeft: () => <LeftArrowButton />,
+        })}
+      />
     </Tab.Navigator>
   );
 };
@@ -65,11 +76,13 @@ function Navigation() {
           component={SignInScreen}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
           name="SignUp"
           component={SignUpScreen}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
           name={'TabNavigation'}
           component={TabNavigation}
