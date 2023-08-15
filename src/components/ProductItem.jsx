@@ -1,17 +1,63 @@
 import React from 'react';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {COLORS} from '../styles/styles';
 
-export const ProductItem = () => {
+export const ProductItem = ({title, description, price, preview}) => {
+  const truncateText = str => {
+    if (str.length >= 50) {
+      return str.substring(0, 115) + '...';
+    }
+    return str;
+  };
+
   return (
-    <View>
-      <Text>Product Cart</Text>
-    </View>
+    <TouchableOpacity style={{width: '85%', marginBottom: 10}}>
+      <View style={styles.cardContainer}>
+        <Image
+          source={{
+            uri: 'https://i.ebayimg.com/images/g/rW4AAOSwnwdjGWGF/s-l1600.jpg',
+          }}
+          style={styles.imageStyle}
+        />
+        <View style={styles.contantContainer}>
+          <View style={styles.contantTitle}>
+            <Text>Apple iPhone 14 Pro</Text>
+            <Text>$1420</Text>
+          </View>
+          <Text>
+            {truncateText(
+              'Fingerprint-resistant oleophobic coating, Support for display of multiple languages and characters simultaneously, Wide color display (P3), True Tone display, HDR, Super Retina XDR Display, Always On Display, ProMotion technology with adaptive refresh rates up to 120Hz, Dynamic Island, 1600 nits peak brightness (HDR), 2000 nits peak brightness (outdoor).',
+            )}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    width: '100%',
+    height: 120,
+    flexDirection: 'row',
+    borderRadius: 10,
+    backgroundColor: COLORS.buttonTextColor,
+    elevation: 5,
+  },
+  imageStyle: {
+    width: '35%',
+    height: '100%',
+    resizeMode: 'center',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  contantContainer: {
+    flex: 1,
+    padding: 12,
+  },
+  contantTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+});

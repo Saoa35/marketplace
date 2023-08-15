@@ -62,5 +62,8 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     color: COLORS.title,
   },
-  listContainer: {},
+  listContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
 });
