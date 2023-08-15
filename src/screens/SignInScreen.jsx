@@ -17,7 +17,11 @@ function SignInScreen({navigation}) {
       </View>
 
       <View style={styles.bottomContainer}>
-        <MainButton name={'Sign In'} btnColor={COLORS.green} />
+        <MainButton
+          name={'Sign In'}
+          screen={'TabNavigation'}
+          btnColor={COLORS.green}
+        />
 
         <View style={styles.bottomTextWrapper}>
           <Text style={styles.bottomText}>Don`t have an account? </Text>

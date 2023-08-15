@@ -21,13 +21,16 @@ const TabNavigation = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size, focused}) => (
+          tabBarIcon: ({focused}) => (
             <Entypo
               name="home"
               color={focused ? COLORS.green : COLORS.gray}
               size={25}
             />
           ),
+          tabBarActiveTintColor: COLORS.green,
+          tabBarInactiveTintColor: COLORS.gray,
+          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />
       <Tab.Screen
@@ -35,13 +38,16 @@ const TabNavigation = () => {
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size, focused}) => (
+          tabBarIcon: ({focused}) => (
             <FontAwesome5
               name="user"
               color={focused ? COLORS.green : COLORS.gray}
               size={25}
             />
           ),
+          tabBarActiveTintColor: COLORS.green,
+          tabBarInactiveTintColor: COLORS.gray,
+          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />
     </Tab.Navigator>
@@ -53,11 +59,6 @@ function Navigation() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name={'TabNavigation'}
-          component={TabNavigation}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{headerShown: false}}
@@ -65,6 +66,11 @@ function Navigation() {
         <Stack.Screen
           name="SignUp"
           component={SignUpScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={'TabNavigation'}
+          component={TabNavigation}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

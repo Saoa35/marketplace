@@ -23,8 +23,11 @@ function SignUpScreen({navigation}) {
       </View>
 
       <View style={styles.bottomContainer}>
-        <MainButton name={'Sign Up'} btnColor={COLORS.green} />
-
+        <MainButton
+          name={'Sign Up'}
+          screen={'TabNavigation'}
+          btnColor={COLORS.green}
+        />
         <View style={styles.bottomTextWrapper}>
           <Text style={styles.bottomText}>Already have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>

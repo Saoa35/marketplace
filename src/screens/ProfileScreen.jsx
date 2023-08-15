@@ -7,8 +7,11 @@ import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {MainButton} from '../components/buttons/MainButton';
+import {useNavigation} from '@react-navigation/native';
 
 function ProfileScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.profileContainer}>
       <View style={styles.imageWrapper}>
@@ -23,7 +26,11 @@ function ProfileScreen() {
       <PhoneInput />
 
       <View style={styles.buttonWrapper}>
-        <MainButton name={'Sign Out'} btnColor={COLORS.blue} />
+        <MainButton
+          name={'Sign Out'}
+          screen={'SignIn'}
+          btnColor={COLORS.blue}
+        />
       </View>
     </View>
   );
