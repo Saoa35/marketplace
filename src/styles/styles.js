@@ -3,4 +3,5 @@ export const COLORS = {
   green: '#4FB932',
   buttonTextColor: '#FFFFFF',
   gray: '#D8D8D8',
+  blue: '#1C77EA',
 };

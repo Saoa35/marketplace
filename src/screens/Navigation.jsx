@@ -15,7 +15,7 @@ function Navigation() {
     <NavigationContainer>
       <Stack.Navigator>
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-        {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen
           name="SignIn"
           component={SignInScreen}
