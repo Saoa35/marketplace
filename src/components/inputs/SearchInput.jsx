@@ -1,7 +1,7 @@
 import React from 'react';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {StyleSheet, View, TextInput} from 'react-native';
-import {COLORS} from '../styles/styles';
+import {COLORS} from '../../styles/styles';
 
 export const SearchInput = () => {
   return (

@@ -1,13 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {GreenButton} from '../components/buttons/GreenButton';
+import {NameInput} from '../components/inputs/NameInput';
+import {EmailInput} from '../components/inputs/EmailInput';
+import {PhoneInput} from '../components/inputs/PhoneInput';
+import {PasswordInput} from '../components/inputs/PasswordInput';
 
 function SignUpScreen({navigation}) {
   return (
@@ -15,34 +13,13 @@ function SignUpScreen({navigation}) {
       <Text style={styles.title}>Sign Up</Text>
 
       <View style={styles.iputContainer}>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Name</Text>
-          <TextInput placeholder="Enter your name" style={styles.input} />
-        </View>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            placeholder="Enter your email"
-            style={styles.input}
-            keyboardType="email-address"
-          />
-        </View>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Phone Number</Text>
-          <TextInput
-            placeholder="Enter your phone number"
-            style={styles.input}
-            keyboardType="phone-pad"
-          />
-        </View>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            placeholder="Enter your password"
-            style={styles.input}
-            secureTextEntry
-          />
-        </View>
+        <NameInput />
+
+        <EmailInput />
+
+        <PhoneInput />
+
+        <PasswordInput />
       </View>
 
       <View style={styles.bottomContainer}>
@@ -77,19 +54,7 @@ const styles = StyleSheet.create({
   iputContainer: {
     alignItems: 'center',
   },
-  inputWrapper: {
-    width: '90%',
-    marginBottom: 30,
-  },
-  label: {
-    fontSize: 16,
-  },
-  input: {
-    fontSize: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-    letterSpacing: 1,
-  },
+
   bottomContainer: {
     alignItems: 'center',
     marginTop: 50,

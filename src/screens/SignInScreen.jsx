@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {GreenButton} from '../components/buttons/GreenButton';
+import {EmailInput} from '../components/inputs/EmailInput';
+import {PasswordInput} from '../components/inputs/PasswordInput';
 
 function SignInScreen({navigation}) {
   return (
@@ -15,22 +11,9 @@ function SignInScreen({navigation}) {
       <Text style={styles.title}>Sign In</Text>
 
       <View style={styles.iputContainer}>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            placeholder="Enter your email"
-            style={styles.input}
-            keyboardType="email-address"
-          />
-        </View>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            placeholder="Enter your password"
-            style={styles.input}
-            secureTextEntry
-          />
-        </View>
+        <EmailInput />
+
+        <PasswordInput />
       </View>
 
       <View style={styles.bottomContainer}>
@@ -65,19 +48,7 @@ const styles = StyleSheet.create({
   iputContainer: {
     alignItems: 'center',
   },
-  inputWrapper: {
-    width: '90%',
-    marginBottom: 30,
-  },
-  label: {
-    fontSize: 16,
-  },
-  input: {
-    fontSize: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-    letterSpacing: 1,
-  },
+
   bottomContainer: {
     alignItems: 'center',
     marginTop: 50,

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
-import {SearchInput} from '../components/SearchInput';
+import {SearchInput} from '../components/inputs/SearchInput';
 // import { FlatList } from 'react-native-gesture-handler';
 
 function HomeScreen() {
