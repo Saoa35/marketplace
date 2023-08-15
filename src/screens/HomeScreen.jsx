@@ -1,25 +1,17 @@
 import React from 'react';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {StyleSheet, View, TextInput, FlatList} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {ProductItem} from '../components/ProductItem';
+import {PlusButton} from '../components/buttons/PlusButton';
 // import { FlatList } from 'react-native-gesture-handler';
 
 function HomeScreen() {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.searchWrapper}>
-        <EvilIcons
-          name="search"
-          style={{fontSize: 25, marginLeft: 8, marginBottom: 3, opacity: 0.6}}
-        />
+        <EvilIcons name="search" style={styles.searchIcon} />
         <TextInput placeholder="Search" style={styles.searchInput} />
       </View>
 
@@ -32,6 +24,8 @@ function HomeScreen() {
         <ProductItem />
         <ProductItem />
       </View>
+
+      <PlusButton />
     </View>
   );
 }
@@ -43,6 +37,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
+    position: 'relative',
   },
   searchWrapper: {
     flexDirection: 'row',
@@ -60,6 +55,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     borderLeftColor: COLORS.gray,
     width: '85%',
+  },
+  searchIcon: {
+    fontSize: 25,
+    marginLeft: 8,
+    marginBottom: 3,
+    opacity: 0.6,
   },
   searchInput: {
     fontSize: 16,
