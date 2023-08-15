@@ -9,6 +9,7 @@ import ProfileScreen from './ProfileScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {COLORS} from '../styles/styles';
+import ProductDetailsScreen from './ProductDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,6 +51,7 @@ const TabNavigation = () => {
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />
+      <Tab.Screen name="ProductDetails" component={ProductDetailsScreen} />
     </Tab.Navigator>
   );
 };

@@ -13,10 +13,10 @@ function HomeScreen() {
       <View style={styles.listContainer}>
         {/* <FlatList /> */}
 
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        <ProductItem screen={'ProductDetails'} />
+        <ProductItem screen={'ProductDetails'} />
+        <ProductItem screen={'ProductDetails'} />
+        <ProductItem screen={'ProductDetails'} />
       </View>
 
       <PlusButton />

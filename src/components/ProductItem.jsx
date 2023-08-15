@@ -1,8 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {COLORS} from '../styles/styles';
+import {useNavigation} from '@react-navigation/native';
 
-export const ProductItem = ({title, description, price, preview}) => {
+export const ProductItem = ({screen, title, description, price, preview}) => {
+  const navigation = useNavigation();
+
   const truncateText = str => {
     if (str.length >= 50) {
       return str.substring(0, 115) + '...';
@@ -11,7 +14,9 @@ export const ProductItem = ({title, description, price, preview}) => {
   };
 
   return (
-    <TouchableOpacity style={{width: '85%', marginBottom: 10}}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate(screen)}
+      style={{width: '85%', marginBottom: 10}}>
       <View style={styles.cardContainer}>
         <Image
           source={{
