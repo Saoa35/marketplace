@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     right: 18,
+    backgroundColor: COLORS.buttonTextColor,
+    borderRadius: 9999,
   },
   image: {
     fontSize: 65,

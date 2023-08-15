@@ -22,7 +22,7 @@ function ProfileScreen() {
 
       <PhoneInput />
 
-      <View style={{width: '100%', alignItems: 'center', marginTop: 20}}>
+      <View style={styles.buttonWrapper}>
         <MainButton name={'Sign Out'} btnColor={COLORS.blue} />
       </View>
     </View>
@@ -38,19 +38,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageWrapper: {
-    marginTop: 40,
-    marginBottom: 40,
+    marginTop: 30,
+    marginBottom: 30,
     backgroundColor: COLORS.gray,
-    width: 220,
-    height: 220,
+    width: 200,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 220,
+    borderRadius: 9999,
     position: 'relative',
   },
   avatar: {
     fontSize: 130,
     color: COLORS.buttonTextColor,
     backgroundColor: COLORS.gray,
+  },
+  buttonWrapper: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 15,
   },
 });
