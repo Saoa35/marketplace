@@ -6,9 +6,11 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {COLORS} from '../styles/styles';
 import {ProductItem} from '../components/ProductItem';
+// import { FlatList } from 'react-native-gesture-handler';
 
 function HomeScreen() {
   return (
@@ -22,6 +24,12 @@ function HomeScreen() {
       </View>
 
       <View style={styles.listContainer}>
+        {/* <FlatList /> */}
+
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
         <ProductItem />
       </View>
     </View>

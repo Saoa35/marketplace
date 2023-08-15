@@ -21,10 +21,10 @@ export const ProductItem = ({title, description, price, preview}) => {
         />
         <View style={styles.contantContainer}>
           <View style={styles.contantTitle}>
-            <Text>Apple iPhone 14 Pro</Text>
-            <Text>$1420</Text>
+            <Text style={styles.itemName}>Apple iPhone 14 Pro</Text>
+            <Text style={styles.itemPrice}>$1420</Text>
           </View>
-          <Text>
+          <Text style={styles.itemDescription}>
             {truncateText(
               'Fingerprint-resistant oleophobic coating, Support for display of multiple languages and characters simultaneously, Wide color display (P3), True Tone display, HDR, Super Retina XDR Display, Always On Display, ProMotion technology with adaptive refresh rates up to 120Hz, Dynamic Island, 1600 nits peak brightness (HDR), 2000 nits peak brightness (outdoor).',
             )}
@@ -58,6 +58,20 @@ const styles = StyleSheet.create({
   contantTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 5,
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.title,
+  },
+  itemPrice: {
+    fontSize: 15,
+    color: COLORS.green,
+    fontWeight: '700',
+    fontWeight: '700',
+  },
+  itemDescription: {
+    color: COLORS.title,
   },
 });
