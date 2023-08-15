@@ -2,22 +2,22 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../styles/styles';
 
-export const GreenButton = ({name}) => {
+export const MainButton = ({name, btnColor}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={{
+        alignItems: 'center',
+        width: '50%',
+        backgroundColor: btnColor,
+        borderRadius: 8,
+        padding: 10,
+      }}>
       <Text style={styles.name}>{name}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    width: '50%',
-    backgroundColor: COLORS.green,
-    borderRadius: 8,
-    padding: 10,
-  },
   name: {
     color: COLORS.buttonTextColor,
     fontSize: 24,

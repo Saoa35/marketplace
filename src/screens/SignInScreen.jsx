@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
-import {GreenButton} from '../components/buttons/GreenButton';
+import {MainButton} from '../components/buttons/MainButton';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 
@@ -17,7 +17,7 @@ function SignInScreen({navigation}) {
       </View>
 
       <View style={styles.bottomContainer}>
-        <GreenButton name={'Sign In'} />
+        <MainButton name={'Sign In'} btnColor={COLORS.green} />
 
         <View style={styles.bottomTextWrapper}>
           <Text style={styles.bottomText}>Don`t have an account? </Text>

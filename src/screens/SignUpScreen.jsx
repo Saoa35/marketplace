@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
-import {GreenButton} from '../components/buttons/GreenButton';
+import {MainButton} from '../components/buttons/MainButton';
 import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
@@ -23,7 +23,7 @@ function SignUpScreen({navigation}) {
       </View>
 
       <View style={styles.bottomContainer}>
-        <GreenButton name={'Sign Up'} />
+        <MainButton name={'Sign Up'} btnColor={COLORS.green} />
 
         <View style={styles.bottomTextWrapper}>
           <Text style={styles.bottomText}>Already have an account? </Text>

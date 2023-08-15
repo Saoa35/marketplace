@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-
   listContainer: {
     width: '100%',
     alignItems: 'center',
