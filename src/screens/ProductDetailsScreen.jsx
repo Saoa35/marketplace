@@ -1,9 +1,10 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, ActivityIndicator} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
+import Swiper from 'react-native-swiper';
 
 function ProductDetailsScreen({title, description, price, images}) {
   images = [
@@ -16,12 +17,24 @@ function ProductDetailsScreen({title, description, price, images}) {
 
   return (
     <View style={styles.productContainer}>
-      <Image
-        source={{
-          uri: 'https://i.ebayimg.com/images/g/rW4AAOSwnwdjGWGF/s-l1600.jpg',
-        }}
-        style={{width: '100%', height: '35%', resizeMode: 'center'}}
-      />
+      {images && (
+        <Swiper
+          loadMinimalLoader={
+            <ActivityIndicator size="small" color={COLORS.green} />
+          }
+          showsButtons={true}
+          showsPagination={false}>
+          {images.map((item, id) => (
+            <Image
+              key={id}
+              source={{
+                uri: item,
+              }}
+              style={{width: '100%', height: '100%', resizeMode: 'contain'}}
+            />
+          ))}
+        </Swiper>
+      )}
 
       <View style={styles.textContant}>
         <View style={styles.contantTitle}>

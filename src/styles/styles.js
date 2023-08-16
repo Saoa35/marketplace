@@ -4,5 +4,5 @@ export const COLORS = {
   buttonTextColor: '#FFFFFF',
   gray: '#D8D8D8',
   blue: '#1C77EA',
-  red: '#E63838',
+  red: '#E83B3B ',
 };

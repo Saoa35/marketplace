@@ -11,6 +11,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {COLORS} from '../styles/styles';
 import ProductDetailsScreen from './ProductDetailsScreen';
 import {LeftArrowButton} from '../components/buttons/LeftArrowButton';
+import AddProductScreen from './AddProductScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -60,6 +61,16 @@ const TabNavigation = () => {
         options={() => ({
           tabBarButton: () => null,
           headerTitle: 'Product Details',
+          headerLeft: () => <LeftArrowButton />,
+        })}
+      />
+
+      <Tab.Screen
+        name="AddProduct"
+        component={AddProductScreen}
+        options={() => ({
+          tabBarButton: () => null,
+          headerTitle: 'Add Product',
           headerLeft: () => <LeftArrowButton />,
         })}
       />
