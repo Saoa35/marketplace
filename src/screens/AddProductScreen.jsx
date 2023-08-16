@@ -1,7 +1,10 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TextInput} from 'react-native';
+import {StyleSheet, Text, View, TextInput} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../styles/styles';
+import {MainButton} from '../components/buttons/MainButton';
+import {AddedImage} from '../components/AddedImage';
 
 function AddProductScreen() {
   return (
@@ -20,6 +23,39 @@ function AddProductScreen() {
           placeholder="Type here"
           style={styles.descriptionInput}
         />
+      </View>
+
+      <View style={styles.buttonsWrapper}>
+        <MainButton
+          name={'Add Product'}
+          btnColor={COLORS.green}
+          icon={
+            <Entypo
+              name="plus"
+              style={{fontSize: 30, color: COLORS.buttonTextColor}}
+            />
+          }
+          screen={'Home'}
+        />
+        <Text style={{width: 20}}></Text>
+        <MainButton
+          name={'Attach Image'}
+          btnColor={COLORS.blue}
+          icon={
+            <MaterialCommunityIcons
+              name="image"
+              style={{fontSize: 30, color: COLORS.buttonTextColor}}
+            />
+          }
+        />
+      </View>
+
+      <View style={styles.imagesContainer}>
+        <AddedImage />
+        <AddedImage />
+        <AddedImage />
+        <AddedImage />
+        <AddedImage />
       </View>
     </View>
   );
@@ -74,5 +110,15 @@ const styles = StyleSheet.create({
     borderRightColor: COLORS.gray,
     borderLeftWidth: 2,
     borderLeftColor: COLORS.gray,
+  },
+  buttonsWrapper: {
+    flexDirection: 'row',
+    paddingHorizontal: 25,
+    marginBottom: 30,
+  },
+  imagesContainer: {
+    width: '90%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
