@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text, TextInput} from 'react-native';
 
-export const EmailInput = () => {
+export const EmailInput = ({email, setEmail}) => {
   return (
     <View style={styles.inputWrapper}>
       <Text style={styles.label}>Email</Text>
       <TextInput
+        value={email}
+        onChangeText={e => setEmail(e)}
         placeholder="Enter your email"
         style={styles.input}
         keyboardType="email-address"

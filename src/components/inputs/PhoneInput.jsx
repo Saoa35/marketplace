@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text, TextInput} from 'react-native';
 
-export const PhoneInput = () => {
+export const PhoneInput = ({phone, setPhone}) => {
   return (
     <View style={styles.inputWrapper}>
       <Text style={styles.label}>Phone Number</Text>
       <TextInput
+        value={phone}
+        onChangeText={e => setPhone(e)}
         placeholder="Enter your phone number"
         style={styles.input}
         keyboardType="phone-pad"

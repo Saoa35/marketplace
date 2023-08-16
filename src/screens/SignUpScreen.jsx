@@ -13,18 +13,20 @@ function SignUpScreen({navigation}) {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleSubmit = () => {};
+
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.title}>Sign Up</Text>
 
       <View style={styles.iputContainer}>
-        <NameInput />
+        <NameInput userName={userName} setUserName={setUserName} />
 
-        <EmailInput />
+        <EmailInput email={email} setEmail={setEmail} />
 
-        <PhoneInput />
+        <PhoneInput phone={phone} setPhone={setPhone} />
 
-        <PasswordInput />
+        <PasswordInput password={password} setPassword={setPassword} />
       </View>
 
       <View style={styles.bottomContainer}>
