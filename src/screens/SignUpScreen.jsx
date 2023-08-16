@@ -6,6 +6,7 @@ import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
+import axios from 'axios';
 
 function SignUpScreen({navigation}) {
   const [userName, setUserName] = useState('');
@@ -13,7 +14,24 @@ function SignUpScreen({navigation}) {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    let response = await axios.post(
+      'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+      {
+        fullName: userName,
+        email: email,
+        phoneNumber: phone,
+        password: password,
+      },
+    );
+
+    console.log(response);
+  };
+
+  const singUpRequest = () => {
+    handleSubmit();
+    navigation.navigate('TabNavigation');
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -32,7 +50,8 @@ function SignUpScreen({navigation}) {
       <View style={styles.bottomContainer}>
         <MainButton
           name={'Sign Up'}
-          screen={'TabNavigation'}
+          // screen={'TabNavigation'}
+          onPressFunction={singUpRequest}
           btnColor={COLORS.green}
         />
         <View style={styles.bottomTextWrapper}>

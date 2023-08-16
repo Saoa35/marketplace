@@ -3,12 +3,13 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../styles/styles';
 import {useNavigation} from '@react-navigation/native';
 
-export const MainButton = ({name, btnColor, icon, screen}) => {
+export const MainButton = ({name, btnColor, icon, screen, onPressFunction}) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
-      onPress={() => (screen ? navigation.navigate(screen) : '')}
+      // onPress={() => (screen ? navigation.navigate(screen) : '')}
+      onPress={() => onPressFunction()}
       style={{
         alignItems: 'center',
         justifyContent: 'center',
