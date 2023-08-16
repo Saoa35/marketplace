@@ -7,6 +7,7 @@ import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 import axios from 'axios';
+import Snackbar from 'react-native-snackbar';
 
 function SignUpScreen({navigation}) {
   const [userName, setUserName] = useState('');
@@ -15,22 +16,33 @@ function SignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async () => {
-    let response = await axios.post(
-      'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
-      {
-        fullName: userName,
-        email: email,
-        phoneNumber: phone,
-        password: password,
-      },
-    );
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+        {
+          fullName: userName,
+          email: email,
+          phoneNumber: phone,
+          password: password,
+        },
+      );
 
-    console.log(response);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const singUpRequest = () => {
-    handleSubmit();
-    navigation.navigate('TabNavigation');
+    if (userName && email && phone && password) {
+      handleSubmit();
+      navigation.navigate('TabNavigation');
+    } else {
+      Snackbar.show({
+        text: 'All input fields are required',
+        backgroundColor: COLORS.red,
+      });
+    }
   };
 
   return (
