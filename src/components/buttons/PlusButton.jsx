@@ -2,10 +2,15 @@ import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../styles/styles';
+import {useNavigation} from '@react-navigation/native';
 
 export const PlusButton = () => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.navigate('AddProduct')}>
       <AntDesign name="pluscircle" style={styles.image} />
     </TouchableOpacity>
   );
