@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
@@ -8,6 +8,11 @@ import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 
 function SignUpScreen({navigation}) {
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.title}>Sign Up</Text>
