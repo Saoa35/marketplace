@@ -73,24 +73,6 @@ const TabNavigation = ({userData}) => {
         {() => <ProfileScreen userData={userData} />}
       </Tab.Screen>
 
-      {/* <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({focused}) => (
-            <FontAwesome5
-              name="user"
-              color={focused ? COLORS.green : COLORS.gray}
-              size={25}
-            />
-          ),
-          tabBarActiveTintColor: COLORS.green,
-          tabBarInactiveTintColor: COLORS.gray,
-          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
-        }}
-      /> */}
-
       <Tab.Screen
         name="ProductDetails"
         component={ProductDetailsScreen}
@@ -139,12 +121,6 @@ function Navigation() {
         <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
           {() => <TabNavigation userData={userData} />}
         </Stack.Screen>
-
-        {/* <Stack.Screen
-          name={'TabNavigation'}
-          component={TabNavigation}
-          options={{headerShown: false}}
-        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

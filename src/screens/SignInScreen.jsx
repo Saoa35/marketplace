@@ -38,9 +38,6 @@ function SignInScreen({setuserData}) {
         if (response.status === 200) {
           setuserData(response.data);
 
-          // let userData = response.data;
-
-          // navigation.navigate('TabNavigation', {userData});
           navigation.navigate('TabNavigation');
         } else {
           Snackbar.show({
@@ -50,8 +47,6 @@ function SignInScreen({setuserData}) {
             marginBottom: 100,
           });
         }
-
-        // console.log(response.data);
       }
     } catch (error) {
       Snackbar.show({

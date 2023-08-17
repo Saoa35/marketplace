@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {useNavigation} from '@react-navigation/native';
 
-export const ProductItem = ({screen, title, description, price, preview}) => {
+export const ProductItem = ({title, description, price, preview}) => {
   const navigation = useNavigation();
 
   const truncateText = str => {
@@ -15,7 +15,7 @@ export const ProductItem = ({screen, title, description, price, preview}) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(screen)}
+      onPress={() => navigation.navigate('ProductDetails')}
       style={{width: '85%', marginBottom: 10}}>
       <View style={styles.cardContainer}>
         <Image

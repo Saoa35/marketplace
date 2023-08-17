@@ -7,11 +7,14 @@ import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {MainButton} from '../components/buttons/MainButton';
+import {useNavigation} from '@react-navigation/native';
 
 function ProfileScreen({userData}) {
   const [userName, setUserName] = useState(fullName);
   const [userEmail, setEmail] = useState(email);
   const [phone, setPhone] = useState(phoneNumber);
+
+  const navigation = useNavigation();
 
   const {fullName, email, phoneNumber} = userData.user;
 
@@ -39,7 +42,7 @@ function ProfileScreen({userData}) {
       <View style={styles.buttonWrapper}>
         <MainButton
           name={'Sign Out'}
-          // screen={'SignIn'}
+          onPressFunction={() => navigation.navigate('SignIn')}
           btnColor={COLORS.blue}
         />
       </View>

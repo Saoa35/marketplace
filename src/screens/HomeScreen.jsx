@@ -9,8 +9,6 @@ import {COLORS} from '../styles/styles';
 // import { FlatList } from 'react-native-gesture-handler';
 
 function HomeScreen({userData}) {
-  // console.log(userData);
-
   const getGoods = async () => {
     try {
       const response = await axios.get(
@@ -42,10 +40,10 @@ function HomeScreen({userData}) {
       <View style={styles.listContainer}>
         {/* <FlatList /> */}
 
-        <ProductItem screen={'ProductDetails'} />
-        <ProductItem screen={'ProductDetails'} />
-        <ProductItem screen={'ProductDetails'} />
-        <ProductItem screen={'ProductDetails'} />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
       </View>
 
       <PlusButton />

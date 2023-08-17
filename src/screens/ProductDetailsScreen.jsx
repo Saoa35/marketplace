@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import Swiper from 'react-native-swiper';
+import {useNavigation} from '@react-navigation/native';
 
 function ProductDetailsScreen({title, description, price, images}) {
   images = [
@@ -14,6 +15,8 @@ function ProductDetailsScreen({title, description, price, images}) {
     'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160014501920.png@webp',
     'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011718399.png@webp',
   ];
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.productContainer}>
@@ -88,7 +91,7 @@ function ProductDetailsScreen({title, description, price, images}) {
               style={{fontSize: 30, color: COLORS.buttonTextColor}}
             />
           }
-          screen={'Home'}
+          onPressFunction={() => navigation.navigate('Home')}
         />
       </View>
     </View>
