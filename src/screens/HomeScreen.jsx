@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
 import {SearchInput} from '../components/inputs/SearchInput';
@@ -10,61 +10,81 @@ import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
 
 function HomeScreen({userData}) {
-  const [goodsList, setGoodsList] = useState(null);
+  const [goodsList, setGoodsList] = useState([]);
+  const [filteredList, setfilteredList] = useState([]);
+
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // const getGoods = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       'https://rn.binary-travel-app.xyz/api/v1/products',
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${userData.token}`,
-  //         },
-  //       },
-  //     );
+  const getGoods = async () => {
+    try {
+      const response = await axios.get(
+        'https://rn.binary-travel-app.xyz/api/v1/products',
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
 
-  //     if (response.status === 200) {
-  //       setGoodsList(response.data);
-  //     } else {
-  //       Snackbar.show({
-  //         text: 'Something went wrong :(',
-  //         backgroundColor: COLORS.red,
-  //         duration: Snackbar.LENGTH_LONG,
-  //         marginBottom: 100,
-  //       });
-  //     }
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     Snackbar.show({
-  //       text: error.message,
-  //       backgroundColor: COLORS.red,
-  //       duration: Snackbar.LENGTH_LONG,
-  //       marginBottom: 100,
-  //     });
+      if (response.status === 200) {
+        setGoodsList(response.data);
+        setfilteredList(response.data);
+      } else {
+        Snackbar.show({
+          text: 'Something went wrong :(',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
+      setIsLoading(false);
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
 
-  //     setIsLoading(false);
+      setIsLoading(false);
 
-  //     console.log(error);
-  //   }
-  // };
+      console.log(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   getGoods();
-  // }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getGoods();
+  }, []);
+
+  const searchFilter = text => {
+    if (text) {
+      const newData = goodsList.filter(item => {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setfilteredList(newData);
+      setSearchValue(text);
+    } else {
+      setfilteredList(goodsList);
+      setSearchValue(text);
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
-      <SearchInput searchValue={searchValue} setSearchValue={setSearchValue} />
+      <SearchInput searchValue={searchValue} searchFilter={searchFilter} />
 
       {isLoading ? (
         <Loader />
       ) : (
         <View style={styles.listContainer}>
           <FlatList
-            data={goodsList}
+            data={filteredList}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<EmptyList />}
