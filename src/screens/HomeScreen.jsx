@@ -7,52 +7,53 @@ import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
+import {EmptyList} from '../components/EmptyList';
 
 function HomeScreen({userData}) {
   const [goodsList, setGoodsList] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const getGoods = async () => {
-    try {
-      const response = await axios.get(
-        'https://rn.binary-travel-app.xyz/api/v1/products',
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        },
-      );
+  // const getGoods = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       'https://rn.binary-travel-app.xyz/api/v1/products',
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${userData.token}`,
+  //         },
+  //       },
+  //     );
 
-      if (response.status === 200) {
-        setGoodsList(response.data);
-      } else {
-        Snackbar.show({
-          text: 'Something went wrong :(',
-          backgroundColor: COLORS.red,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      }
-      setIsLoading(false);
-    } catch (error) {
-      Snackbar.show({
-        text: error.message,
-        backgroundColor: COLORS.red,
-        duration: Snackbar.LENGTH_LONG,
-        marginBottom: 100,
-      });
+  //     if (response.status === 200) {
+  //       setGoodsList(response.data);
+  //     } else {
+  //       Snackbar.show({
+  //         text: 'Something went wrong :(',
+  //         backgroundColor: COLORS.red,
+  //         duration: Snackbar.LENGTH_LONG,
+  //         marginBottom: 100,
+  //       });
+  //     }
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     Snackbar.show({
+  //       text: error.message,
+  //       backgroundColor: COLORS.red,
+  //       duration: Snackbar.LENGTH_LONG,
+  //       marginBottom: 100,
+  //     });
 
-      setIsLoading(false);
+  //     setIsLoading(false);
 
-      console.log(error);
-    }
-  };
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    setIsLoading(true);
-    getGoods();
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getGoods();
+  // }, []);
 
   return (
     <View style={styles.mainContainer}>
@@ -63,13 +64,14 @@ function HomeScreen({userData}) {
       ) : (
         <View style={styles.listContainer}>
           <FlatList
+            data={goodsList}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<EmptyList />}
             contentContainerStyle={{
               width: '100%',
               alignItems: 'center',
             }}
-            data={goodsList}
-            keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
             renderItem={({item}) => (
               <ProductItem
                 title={item.title}
