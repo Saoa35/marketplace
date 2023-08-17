@@ -41,6 +41,8 @@ function SignUpScreen({navigation}) {
       Snackbar.show({
         text: 'All input fields are required',
         backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 50,
       });
     }
   };
@@ -62,7 +64,6 @@ function SignUpScreen({navigation}) {
       <View style={styles.bottomContainer}>
         <MainButton
           name={'Sign Up'}
-          // screen={'TabNavigation'}
           onPressFunction={singUpRequest}
           btnColor={COLORS.green}
         />
