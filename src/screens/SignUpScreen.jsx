@@ -8,42 +8,60 @@ import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import {useNavigation} from '@react-navigation/native';
 
-function SignUpScreen({navigation}) {
+function SignUpScreen({setuserData}) {
   const [userName, setUserName] = useState('');
   const [userEmail, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
-        {
-          fullName: userName,
-          email: userEmail,
-          phoneNumber: phone,
-          password: password,
-        },
-      );
+      if (!userName || !userEmail || !phone || !password) {
+        Snackbar.show({
+          text: 'All input fields are required',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 50,
+        });
+      } else {
+        const response = await axios.post(
+          'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+          {
+            fullName: userName,
+            email: userEmail,
+            phoneNumber: phone,
+            password: password,
+          },
+        );
 
-      console.log(response.data);
+        if (response.status === 200) {
+          setuserData(response.data);
+
+          navigation.navigate('TabNavigation');
+        } else {
+          Snackbar.show({
+            text: 'Something went wrong :(',
+            backgroundColor: COLORS.red,
+            duration: Snackbar.LENGTH_LONG,
+            marginBottom: 100,
+          });
+        }
+
+        // console.log(response.data);
+      }
     } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const singUpRequest = () => {
-    if (userName && userEmail && phone && password) {
-      handleSubmit();
-      navigation.navigate('TabNavigation');
-    } else {
       Snackbar.show({
-        text: 'All input fields are required',
+        text: error.message,
         backgroundColor: COLORS.red,
         duration: Snackbar.LENGTH_LONG,
-        marginBottom: 50,
+        marginBottom: 100,
       });
+
+      console.log(error.message);
     }
   };
 
@@ -64,7 +82,7 @@ function SignUpScreen({navigation}) {
       <View style={styles.bottomContainer}>
         <MainButton
           name={'Sign Up'}
-          onPressFunction={singUpRequest}
+          onPressFunction={handleSubmit}
           btnColor={COLORS.green}
         />
         <View style={styles.bottomTextWrapper}>

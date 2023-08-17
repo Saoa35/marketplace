@@ -37,24 +37,6 @@ const TabNavigation = ({userData}) => {
         {() => <HomeScreen userData={userData} />}
       </Tab.Screen>
 
-      {/* <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({focused}) => (
-            <Entypo
-              name="home"
-              color={focused ? COLORS.green : COLORS.gray}
-              size={25}
-            />
-          ),
-          tabBarActiveTintColor: COLORS.green,
-          tabBarInactiveTintColor: COLORS.gray,
-          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
-        }}
-      /> */}
-
       <Tab.Screen
         name="Profile"
         options={{
@@ -102,21 +84,13 @@ function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{headerShown: false}}
-        /> */}
-
         <Stack.Screen name="SignIn" options={{headerShown: false}}>
           {() => <SignInScreen setuserData={setuserData} />}
         </Stack.Screen>
 
-        <Stack.Screen
-          name="SignUp"
-          component={SignUpScreen}
-          options={{headerShown: false}}
-        />
+        <Stack.Screen name="SignUp" options={{headerShown: false}}>
+          {() => <SignUpScreen setuserData={setuserData} />}
+        </Stack.Screen>
 
         <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
           {() => <TabNavigation userData={userData} />}
