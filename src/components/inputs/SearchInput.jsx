@@ -3,11 +3,16 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {StyleSheet, View, TextInput} from 'react-native';
 import {COLORS} from '../../styles/styles';
 
-export const SearchInput = () => {
+export const SearchInput = ({searchValue, setSearchValue}) => {
   return (
     <View style={styles.searchWrapper}>
       <EvilIcons name="search" style={styles.searchIcon} />
-      <TextInput placeholder="Search" style={styles.searchInput} />
+      <TextInput
+        value={searchValue}
+        onChangeText={e => setSearchValue(e)}
+        placeholder="Search"
+        style={styles.searchInput}
+      />
     </View>
   );
 };

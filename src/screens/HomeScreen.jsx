@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
 import {SearchInput} from '../components/inputs/SearchInput';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {COLORS} from '../styles/styles';
-// import { FlatList } from 'react-native-gesture-handler';
+import {Loader} from '../components/Loader';
 
 function HomeScreen({userData}) {
   const [goodsList, setGoodsList] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const getGoods = async () => {
     try {
@@ -32,6 +34,7 @@ function HomeScreen({userData}) {
           marginBottom: 100,
         });
       }
+      setIsLoading(false);
     } catch (error) {
       Snackbar.show({
         text: error.message,
@@ -40,37 +43,44 @@ function HomeScreen({userData}) {
         marginBottom: 100,
       });
 
+      setIsLoading(false);
+
       console.log(error);
     }
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getGoods();
   }, []);
 
   return (
     <View style={styles.mainContainer}>
-      <SearchInput />
+      <SearchInput searchValue={searchValue} setSearchValue={setSearchValue} />
 
-      <View style={styles.listContainer}>
-        <FlatList
-          contentContainerStyle={{
-            width: '100%',
-            alignItems: 'center',
-          }}
-          data={goodsList}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
-            <ProductItem
-              title={item.title}
-              description={item.description}
-              price={item.price}
-              preview={item.preview}
-            />
-          )}
-        />
-      </View>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <View style={styles.listContainer}>
+          <FlatList
+            contentContainerStyle={{
+              width: '100%',
+              alignItems: 'center',
+            }}
+            data={goodsList}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
+              <ProductItem
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                preview={item.preview}
+              />
+            )}
+          />
+        </View>
+      )}
 
       <PlusButton />
     </View>
