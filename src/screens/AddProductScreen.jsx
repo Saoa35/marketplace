@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TextInput} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,17 +7,27 @@ import {MainButton} from '../components/buttons/MainButton';
 import {AddedImage} from '../components/AddedImage';
 
 function AddProductScreen() {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
   return (
     <View style={styles.addContainer}>
       <View style={styles.titleInputWrapper}>
         <Text style={styles.label}>Title</Text>
-        <TextInput placeholder="Title" style={styles.input} />
+        <TextInput
+          value={title}
+          onChangeText={e => setTitle(e)}
+          placeholder="Title"
+          style={styles.input}
+        />
         <Text style={styles.requiredText}>Title is required</Text>
       </View>
 
       <View style={styles.descriptionWrapper}>
         <Text style={styles.label}>Description</Text>
         <TextInput
+          value={description}
+          onChangeText={e => setDescription(e)}
           multiline
           numberOfLines={6}
           placeholder="Type here"

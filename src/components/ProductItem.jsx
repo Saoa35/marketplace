@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {useNavigation} from '@react-navigation/native';
 
-export const ProductItem = ({title, description, price, preview}) => {
+export const ProductItem = memo(({title, description, price, preview}) => {
   const navigation = useNavigation();
 
   const truncateText = str => {
@@ -38,7 +38,7 @@ export const ProductItem = ({title, description, price, preview}) => {
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   cardContainer: {

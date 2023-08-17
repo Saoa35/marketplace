@@ -50,8 +50,6 @@ function SignUpScreen({setuserData}) {
             marginBottom: 100,
           });
         }
-
-        // console.log(response.data);
       }
     } catch (error) {
       Snackbar.show({
