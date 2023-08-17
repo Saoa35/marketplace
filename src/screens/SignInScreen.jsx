@@ -6,15 +6,20 @@ import {EmailInput} from '../components/inputs/EmailInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import {useNavigation} from '@react-navigation/native';
 
-function SignInScreen({navigation}) {
-  const [email, setEmail] = useState('');
+// email: arthur.dent@mail.com
+// password: pa$Sword
+
+function SignInScreen({setuserData}) {
+  const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userData, setuserData] = useState('');
+
+  const navigation = useNavigation();
 
   const handleSubmit = async () => {
     try {
-      if (!email && !password) {
+      if (!userEmail || !password) {
         Snackbar.show({
           text: 'Email and Password fields are required',
           backgroundColor: COLORS.red,
@@ -25,7 +30,7 @@ function SignInScreen({navigation}) {
         const response = await axios.post(
           'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
           {
-            email: email,
+            email: userEmail,
             password: password,
           },
         );
@@ -33,7 +38,10 @@ function SignInScreen({navigation}) {
         if (response.status === 200) {
           setuserData(response.data);
 
-          navigation.navigate('TabNavigation', {userData});
+          // let userData = response.data;
+
+          // navigation.navigate('TabNavigation', {userData});
+          navigation.navigate('TabNavigation');
         } else {
           Snackbar.show({
             text: 'Something went wrong :(',
@@ -43,7 +51,7 @@ function SignInScreen({navigation}) {
           });
         }
 
-        console.log(response.data);
+        // console.log(response.data);
       }
     } catch (error) {
       Snackbar.show({
@@ -62,7 +70,7 @@ function SignInScreen({navigation}) {
       <Text style={styles.title}>Sign In</Text>
 
       <View style={styles.iputContainer}>
-        <EmailInput email={email} setEmail={setEmail} />
+        <EmailInput userEmail={userEmail} setEmail={setEmail} />
 
         <PasswordInput password={password} setPassword={setPassword} />
       </View>

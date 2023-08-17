@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {COLORS} from '../styles/styles';
@@ -7,10 +7,17 @@ import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {MainButton} from '../components/buttons/MainButton';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 
-function ProfileScreen() {
-  const navigation = useNavigation();
+function ProfileScreen({userData}) {
+  // const navigation = useNavigation();
+  const [userName, setUserName] = useState('');
+  const [userEmail, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const {fullName, email} = userData.user;
+
+  console.log(userData);
 
   return (
     <View style={styles.profileContainer}>
@@ -19,11 +26,11 @@ function ProfileScreen() {
         <EditButton />
       </View>
 
-      <NameInput />
+      <NameInput userName={userName} setUserName={setUserName} />
 
-      <EmailInput />
+      <EmailInput userEmail={userEmail} setEmail={setEmail} />
 
-      <PhoneInput />
+      <PhoneInput phone={phone} setPhone={setPhone} />
 
       <View style={styles.buttonWrapper}>
         <MainButton

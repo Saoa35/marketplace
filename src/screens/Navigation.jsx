@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useState} from 'react';
 import SignInScreen from './SignInScreen';
 import SignUpScreen from './SignUpScreen';
 import HomeScreen from './HomeScreen';
@@ -16,10 +16,28 @@ import AddProductScreen from './AddProductScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = () => {
+const TabNavigation = ({userData}) => {
   return (
     <Tab.Navigator>
       <Tab.Screen
+        name="Home"
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({focused}) => (
+            <Entypo
+              name="home"
+              color={focused ? COLORS.green : COLORS.gray}
+              size={25}
+            />
+          ),
+          tabBarActiveTintColor: COLORS.green,
+          tabBarInactiveTintColor: COLORS.gray,
+          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
+        }}>
+        {() => <HomeScreen userData={userData} />}
+      </Tab.Screen>
+
+      {/* <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
@@ -35,9 +53,27 @@ const TabNavigation = () => {
           tabBarInactiveTintColor: COLORS.gray,
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
-      />
+      /> */}
 
       <Tab.Screen
+        name="Profile"
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({focused}) => (
+            <FontAwesome5
+              name="user"
+              color={focused ? COLORS.green : COLORS.gray}
+              size={25}
+            />
+          ),
+          tabBarActiveTintColor: COLORS.green,
+          tabBarInactiveTintColor: COLORS.gray,
+          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
+        }}>
+        {() => <ProfileScreen userData={userData} />}
+      </Tab.Screen>
+
+      {/* <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -53,7 +89,7 @@ const TabNavigation = () => {
           tabBarInactiveTintColor: COLORS.gray,
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name="ProductDetails"
@@ -79,14 +115,20 @@ const TabNavigation = () => {
 };
 
 function Navigation() {
+  const [userData, setuserData] = useState(null);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{headerShown: false}}
-        />
+        /> */}
+
+        <Stack.Screen name="SignIn" options={{headerShown: false}}>
+          {() => <SignInScreen setuserData={setuserData} />}
+        </Stack.Screen>
 
         <Stack.Screen
           name="SignUp"
@@ -94,11 +136,15 @@ function Navigation() {
           options={{headerShown: false}}
         />
 
-        <Stack.Screen
+        <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
+          {() => <TabNavigation userData={userData} />}
+        </Stack.Screen>
+
+        {/* <Stack.Screen
           name={'TabNavigation'}
           component={TabNavigation}
           options={{headerShown: false}}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

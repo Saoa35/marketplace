@@ -11,7 +11,7 @@ import Snackbar from 'react-native-snackbar';
 
 function SignUpScreen({navigation}) {
   const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
+  const [userEmail, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,7 +21,7 @@ function SignUpScreen({navigation}) {
         'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
         {
           fullName: userName,
-          email: email,
+          email: userEmail,
           phoneNumber: phone,
           password: password,
         },
@@ -34,7 +34,7 @@ function SignUpScreen({navigation}) {
   };
 
   const singUpRequest = () => {
-    if (userName && email && phone && password) {
+    if (userName && userEmail && phone && password) {
       handleSubmit();
       navigation.navigate('TabNavigation');
     } else {
@@ -54,7 +54,7 @@ function SignUpScreen({navigation}) {
       <View style={styles.iputContainer}>
         <NameInput userName={userName} setUserName={setUserName} />
 
-        <EmailInput email={email} setEmail={setEmail} />
+        <EmailInput userEmail={userEmail} setEmail={setEmail} />
 
         <PhoneInput phone={phone} setPhone={setPhone} />
 
