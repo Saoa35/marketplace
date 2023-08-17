@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {COLORS} from '../styles/styles';
@@ -7,17 +7,21 @@ import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {MainButton} from '../components/buttons/MainButton';
-// import {useNavigation} from '@react-navigation/native';
 
 function ProfileScreen({userData}) {
-  // const navigation = useNavigation();
-  const [userName, setUserName] = useState('');
-  const [userEmail, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [userName, setUserName] = useState(fullName);
+  const [userEmail, setEmail] = useState(email);
+  const [phone, setPhone] = useState(phoneNumber);
 
-  const {fullName, email} = userData.user;
+  const {fullName, email, phoneNumber} = userData.user;
 
-  console.log(userData);
+  useEffect(() => {
+    setUserName(fullName);
+    setEmail(email);
+    setPhone(phoneNumber);
+  }, [fullName, email, phoneNumber]);
+
+  // console.log(userData);
 
   return (
     <View style={styles.profileContainer}>
@@ -35,7 +39,7 @@ function ProfileScreen({userData}) {
       <View style={styles.buttonWrapper}>
         <MainButton
           name={'Sign Out'}
-          screen={'SignIn'}
+          // screen={'SignIn'}
           btnColor={COLORS.blue}
         />
       </View>
