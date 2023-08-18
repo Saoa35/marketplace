@@ -68,7 +68,9 @@ const TabNavigation = ({userData, productId, setProductId}) => {
           headerTitle: 'Product Details',
           headerLeft: () => <LeftArrowButton />,
         })}>
-        {() => <ProductDetailsScreen userData={userData} />}
+        {() => (
+          <ProductDetailsScreen userData={userData} productId={productId} />
+        )}
       </Tab.Screen>
 
       <Tab.Screen

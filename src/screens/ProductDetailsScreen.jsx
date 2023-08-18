@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {Loader} from '../components/Loader';
 
-function ProductDetailsScreen({userData}) {
+function ProductDetailsScreen({userData, productId}) {
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState(null);
 
@@ -18,7 +18,7 @@ function ProductDetailsScreen({userData}) {
   const getProduct = async () => {
     try {
       const response = await axios.get(
-        'https://rn.binary-travel-app.xyz/api/v1/products/2dc8fd4d-c81f-4bbc-9eee-4d52dc102c89',
+        'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
         {
           headers: {
             Authorization: `Bearer ${userData.token}`,
@@ -36,8 +36,6 @@ function ProductDetailsScreen({userData}) {
           marginBottom: 100,
         });
       }
-
-      // console.log(response.data);
 
       setIsLoading(false);
     } catch (error) {
@@ -59,7 +57,7 @@ function ProductDetailsScreen({userData}) {
   useEffect(() => {
     setIsLoading(true);
     getProduct();
-  }, []);
+  }, [productId]);
 
   if (isLoading) {
     return <Loader />;
