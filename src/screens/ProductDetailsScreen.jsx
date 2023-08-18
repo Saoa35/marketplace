@@ -7,10 +7,17 @@ import {MainButton} from '../components/buttons/MainButton';
 import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import {Loader} from '../components/Loader';
 
-function ProductDetailsScreen({userData}) {
+function ProductDetailsScreen({userData, route}) {
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState(null);
+
+  // const {id} = route.params;
+
+  console.log(route);
+
+  // console.log(id);
 
   const navigation = useNavigation();
 
@@ -60,9 +67,13 @@ function ProductDetailsScreen({userData}) {
     getProduct();
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <View style={styles.productContainer}>
-      {product.images ? (
+      {product?.images ? (
         <Swiper
           style={{width: '100%', height: '100%'}}
           loadMinimalLoader={
@@ -91,17 +102,17 @@ function ProductDetailsScreen({userData}) {
 
       <View style={styles.textContant}>
         <View style={styles.contantTitle}>
-          <Text style={styles.itemName}>{product.title}</Text>
-          <Text style={styles.itemPrice}>${product.price}</Text>
+          <Text style={styles.itemName}>{product?.title}</Text>
+          <Text style={styles.itemPrice}>${product?.price}</Text>
         </View>
-        <Text style={styles.itemDescription}>{product.description}</Text>
+        <Text style={styles.itemDescription}>{product?.description}</Text>
       </View>
 
       <View style={styles.profileWrapper}>
         <View style={styles.profileImageWrapper}>
-          {product.seller.avatar ? (
+          {product?.seller.avatar ? (
             <Image
-              source={{uri: product.seller.avatar}}
+              source={{uri: product?.seller.avatar}}
               style={{width: 70, height: 70, borderRadius: 9999}}
             />
           ) : (
@@ -109,8 +120,8 @@ function ProductDetailsScreen({userData}) {
           )}
         </View>
         <View>
-          <Text style={styles.nameText}>{product.seller.fullName}</Text>
-          <Text style={styles.phoneText}>+38{product.seller.phoneNumber}</Text>
+          <Text style={styles.nameText}>{product?.seller.fullName}</Text>
+          <Text style={styles.phoneText}>+38{product?.seller.phoneNumber}</Text>
         </View>
       </View>
 

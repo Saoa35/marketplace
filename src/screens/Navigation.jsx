@@ -80,6 +80,7 @@ const TabNavigation = ({userData}) => {
 
 function Navigation() {
   const [userData, setuserData] = useState(null);
+  const [productId, setProductId] = useState('');
 
   return (
     <NavigationContainer>
@@ -93,7 +94,13 @@ function Navigation() {
         </Stack.Screen>
 
         <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
-          {() => <TabNavigation userData={userData} />}
+          {() => (
+            <TabNavigation
+              userData={userData}
+              productId={productId}
+              setProductId={setProductId}
+            />
+          )}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
