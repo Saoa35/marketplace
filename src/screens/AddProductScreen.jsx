@@ -11,7 +11,49 @@ function AddProductScreen() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [product, setProduct] = useState(null);
+
   const navigation = useNavigation();
+
+  const getProduct = async () => {
+    try {
+      const response = await axios.get(
+        'https://rn.binary-travel-app.xyz/api/v1/products',
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        setProduct(response.data);
+      } else {
+        Snackbar.show({
+          text: 'Something went wrong :(',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+
+      setIsLoading(false);
+
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.addContainer}>

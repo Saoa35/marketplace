@@ -101,6 +101,7 @@ function HomeScreen({userData}) {
             }}
             renderItem={({item}) => (
               <ProductItem
+                userData={userData}
                 title={item.title}
                 description={item.description}
                 price={item.price}
