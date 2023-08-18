@@ -36,7 +36,7 @@ function ProductDetailsScreen({userData}) {
         setProduct(response.data);
       } else {
         Snackbar.show({
-          text: 'Something went wrong :(',
+          text: 'Can`t find product information',
           backgroundColor: COLORS.red,
           duration: Snackbar.LENGTH_LONG,
           marginBottom: 100,
@@ -55,6 +55,8 @@ function ProductDetailsScreen({userData}) {
       setIsLoading(false);
 
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
