@@ -16,7 +16,7 @@ export const ProductItem = memo(({title, description, price, preview}) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('ProductDetails')}
-      style={{width: '85%', marginBottom: 10}}>
+      style={{width: '100%', marginBottom: 10}}>
       <View style={styles.cardContainer}>
         {preview && (
           <Image

@@ -88,12 +88,15 @@ function HomeScreen({userData}) {
             data={filteredList}
             keyExtractor={item => item.id}
             refreshControl={
-              <RefreshControl refreshing={isLoading} onRefresh={getGoods} />
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={() => getGoods}
+              />
             }
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<EmptyList />}
             contentContainerStyle={{
-              width: '100%',
+              width: 350,
               alignItems: 'center',
             }}
             renderItem={({item}) => (
