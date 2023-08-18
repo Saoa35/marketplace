@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View, ActivityIndicator} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,8 +7,11 @@ import {MainButton} from '../components/buttons/MainButton';
 import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
 
-function ProductDetailsScreen({title, description, price, images}) {
-  images = [
+function ProductDetailsScreen({userData}) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [product, setProduct] = useState(null);
+
+  const images = [
     'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011128841.png@webp',
     'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011327805.png@webp',
     'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011957124.png@webp',
@@ -17,6 +20,48 @@ function ProductDetailsScreen({title, description, price, images}) {
   ];
 
   const navigation = useNavigation();
+
+  const getProduct = async () => {
+    try {
+      const response = await axios.get(
+        'https://rn.binary-travel-app.xyz/api/v1/products',
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        setProduct(response.data);
+      } else {
+        Snackbar.show({
+          text: 'Something went wrong :(',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+
+      setIsLoading(false);
+
+      console.log(error);
+    }
+  };
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getProduct()
+  // }, []);
 
   return (
     <View style={styles.productContainer}>
