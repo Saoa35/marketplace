@@ -9,15 +9,9 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {Loader} from '../components/Loader';
 
-function ProductDetailsScreen({userData, route}) {
+function ProductDetailsScreen({userData}) {
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState(null);
-
-  // const {id} = route.params;
-
-  console.log(route);
-
-  // console.log(id);
 
   const navigation = useNavigation();
 
@@ -43,7 +37,7 @@ function ProductDetailsScreen({userData, route}) {
         });
       }
 
-      console.log(response.data);
+      // console.log(response.data);
 
       setIsLoading(false);
     } catch (error) {

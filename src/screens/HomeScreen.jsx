@@ -9,7 +9,7 @@ import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
 
-function HomeScreen({userData}) {
+function HomeScreen({userData, setProductId}) {
   const [goodsList, setGoodsList] = useState([]);
   const [filteredList, setfilteredList] = useState([]);
 
@@ -38,8 +38,6 @@ function HomeScreen({userData}) {
           marginBottom: 100,
         });
       }
-
-      // console.log(response.data);
 
       setIsLoading(false);
     } catch (error) {
@@ -104,6 +102,7 @@ function HomeScreen({userData}) {
             renderItem={({item}) => (
               <ProductItem
                 userData={userData}
+                setProductId={setProductId}
                 id={item.id}
                 title={item.title}
                 description={item.description}

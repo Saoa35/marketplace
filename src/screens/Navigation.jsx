@@ -16,7 +16,7 @@ import AddProductScreen from './AddProductScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = ({userData}) => {
+const TabNavigation = ({userData, productId, setProductId}) => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -34,7 +34,13 @@ const TabNavigation = ({userData}) => {
           tabBarInactiveTintColor: COLORS.gray,
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}>
-        {() => <HomeScreen userData={userData} />}
+        {() => (
+          <HomeScreen
+            userData={userData}
+            productId={productId}
+            setProductId={setProductId}
+          />
+        )}
       </Tab.Screen>
 
       <Tab.Screen

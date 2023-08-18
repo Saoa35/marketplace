@@ -4,10 +4,13 @@ import {COLORS} from '../styles/styles';
 import {useNavigation} from '@react-navigation/native';
 
 export const ProductItem = memo(
-  ({userData, id, title, description, price, preview}) => {
+  ({userData, id, title, description, price, preview, setProductId}) => {
     const navigation = useNavigation();
 
-    // console.log(id);
+    const handleCurrentProduct = () => {
+      setProductId(id);
+      navigation.navigate('ProductDetails');
+    };
 
     const truncateText = str => {
       if (str.length >= 50) {
@@ -18,7 +21,7 @@ export const ProductItem = memo(
 
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('ProductDetails', {id})}
+        onPress={handleCurrentProduct}
         style={{width: '100%', marginBottom: 15}}>
         <View style={styles.cardContainer}>
           {preview ? (
