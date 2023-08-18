@@ -15,6 +15,7 @@ import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {Loader} from '../components/Loader';
+import Snackbar from 'react-native-snackbar';
 
 function ProductDetailsScreen({userData, productId}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,11 +62,51 @@ function ProductDetailsScreen({userData, productId}) {
     }
   };
 
+  const deleteProduct = async () => {
+    try {
+      const response = await axios.delete(
+        'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        navigation.navigate('Home');
+      } else {
+        Snackbar.show({
+          text: 'Can`t delete product',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+
+      setIsLoading(false);
+
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
     getProduct();
   }, [productId]);
 
+  // const sellerId = userData.user.id;
   const sellerId = product.seller.id;
   const userId = userData.user.id;
 
@@ -157,7 +198,7 @@ function ProductDetailsScreen({userData, productId}) {
                 style={{fontSize: 30, color: COLORS.buttonTextColor}}
               />
             }
-            onPressFunction={() => navigation.navigate('Home')}
+            onPressFunction={deleteProduct}
           />
         ) : (
           ''
@@ -204,7 +245,6 @@ const styles = StyleSheet.create({
   },
   profileWrapper: {
     width: '100%',
-    height: '15%',
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 25,
