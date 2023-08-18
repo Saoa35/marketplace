@@ -6,25 +6,18 @@ import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 function ProductDetailsScreen({userData}) {
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState(null);
-
-  const images = [
-    'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011128841.png@webp',
-    'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011327805.png@webp',
-    'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011957124.png@webp',
-    'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160014501920.png@webp',
-    'https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/220908083449025292/221010160011718399.png@webp',
-  ];
 
   const navigation = useNavigation();
 
   const getProduct = async () => {
     try {
       const response = await axios.get(
-        'https://rn.binary-travel-app.xyz/api/v1/products',
+        'https://rn.binary-travel-app.xyz/api/v1/products/2dc8fd4d-c81f-4bbc-9eee-4d52dc102c89',
         {
           headers: {
             Authorization: `Bearer ${userData.token}`,
@@ -43,6 +36,8 @@ function ProductDetailsScreen({userData}) {
         });
       }
 
+      console.log(response.data);
+
       setIsLoading(false);
     } catch (error) {
       Snackbar.show({
@@ -60,21 +55,22 @@ function ProductDetailsScreen({userData}) {
     }
   };
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   getProduct()
-  // }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getProduct();
+  }, []);
 
   return (
     <View style={styles.productContainer}>
-      {images && (
+      {product.images && (
         <Swiper
+          style={{width: '100%', height: '100%'}}
           loadMinimalLoader={
             <ActivityIndicator size="small" color={COLORS.green} />
           }
           showsButtons={true}
           showsPagination={false}>
-          {images.map((item, id) => (
+          {product.images.map((item, id) => (
             <Image
               key={id}
               source={{

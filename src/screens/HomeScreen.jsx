@@ -39,6 +39,8 @@ function HomeScreen({userData}) {
         });
       }
 
+      // console.log(response.data);
+
       setIsLoading(false);
     } catch (error) {
       Snackbar.show({
