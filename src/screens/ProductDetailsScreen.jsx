@@ -75,6 +75,13 @@ function ProductDetailsScreen({userData, productId}) {
 
       if (response.status === 200) {
         navigation.navigate('Home');
+
+        Snackbar.show({
+          text: `Product ${product?.title} was successfuly deleted`,
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
       } else {
         Snackbar.show({
           text: 'Can`t delete product',
@@ -107,8 +114,8 @@ function ProductDetailsScreen({userData, productId}) {
   }, [productId]);
 
   // const sellerId = userData.user.id;
-  const sellerId = product.seller.id;
-  const userId = userData.user.id;
+  const sellerId = product?.seller.id;
+  const userId = userData?.user.id;
 
   if (isLoading) {
     return <Loader />;

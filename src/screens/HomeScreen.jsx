@@ -100,11 +100,7 @@ function HomeScreen({userData, setProductId}) {
               alignItems: 'center',
             }}
             renderItem={({item}) => (
-              <ProductItem
-                // userData={userData}
-                setProductId={setProductId}
-                item={item}
-              />
+              <ProductItem setProductId={setProductId} item={item} />
             )}
           />
         </View>
