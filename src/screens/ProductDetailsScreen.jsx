@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, View, ActivityIndicator} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../styles/styles';
@@ -59,6 +66,9 @@ function ProductDetailsScreen({userData, productId}) {
     getProduct();
   }, [productId]);
 
+  const sellerId = product.seller.id;
+  const userId = userData.user.id;
+
   if (isLoading) {
     return <Loader />;
   }
@@ -97,7 +107,9 @@ function ProductDetailsScreen({userData, productId}) {
           <Text style={styles.itemName}>{product?.title}</Text>
           <Text style={styles.itemPrice}>${product?.price}</Text>
         </View>
-        <Text style={styles.itemDescription}>{product?.description}</Text>
+        <ScrollView>
+          <Text style={styles.itemDescription}>{product?.description}</Text>
+        </ScrollView>
       </View>
 
       <View style={styles.profileWrapper}>
@@ -135,17 +147,21 @@ function ProductDetailsScreen({userData, productId}) {
       </View>
 
       <View style={styles.deleteButtonWrapper}>
-        <MainButton
-          name={'Delete Product'}
-          btnColor={COLORS.red}
-          icon={
-            <Entypo
-              name="cross"
-              style={{fontSize: 30, color: COLORS.buttonTextColor}}
-            />
-          }
-          onPressFunction={() => navigation.navigate('Home')}
-        />
+        {userId === sellerId ? (
+          <MainButton
+            name={'Delete Product'}
+            btnColor={COLORS.red}
+            icon={
+              <Entypo
+                name="cross"
+                style={{fontSize: 30, color: COLORS.buttonTextColor}}
+              />
+            }
+            onPressFunction={() => navigation.navigate('Home')}
+          />
+        ) : (
+          ''
+        )}
       </View>
     </View>
   );
@@ -188,6 +204,7 @@ const styles = StyleSheet.create({
   },
   profileWrapper: {
     width: '100%',
+    height: '15%',
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 25,
@@ -224,6 +241,7 @@ const styles = StyleSheet.create({
   },
   deleteButtonWrapper: {
     width: '100%',
+    height: '7%',
     alignItems: 'center',
     marginBottom: 15,
   },

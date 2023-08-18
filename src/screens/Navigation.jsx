@@ -16,7 +16,13 @@ import AddProductScreen from './AddProductScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = ({userData, productId, setProductId}) => {
+const TabNavigation = ({
+  userData,
+  productId,
+  setProductId,
+  productData,
+  setProductData,
+}) => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -39,6 +45,8 @@ const TabNavigation = ({userData, productId, setProductId}) => {
             userData={userData}
             productId={productId}
             setProductId={setProductId}
+            productData={productData}
+            setProductData={setProductData}
           />
         )}
       </Tab.Screen>
@@ -89,6 +97,7 @@ const TabNavigation = ({userData, productId, setProductId}) => {
 function Navigation() {
   const [userData, setuserData] = useState(null);
   const [productId, setProductId] = useState('');
+  const [productData, setProductData] = useState(null);
 
   return (
     <NavigationContainer>
@@ -107,6 +116,8 @@ function Navigation() {
               userData={userData}
               productId={productId}
               setProductId={setProductId}
+              productData={productData}
+              setProductData={setProductData}
             />
           )}
         </Stack.Screen>
