@@ -5,10 +5,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import {AddedImage} from '../components/AddedImage';
+import {useNavigation} from '@react-navigation/native';
 
 function AddProductScreen() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.addContainer}>
@@ -45,7 +48,7 @@ function AddProductScreen() {
               style={{fontSize: 30, color: COLORS.buttonTextColor}}
             />
           }
-          screen={'Home'}
+          onPressFunction={() => navigation.navigate('Home')}
         />
         <Text style={{width: 20}}></Text>
         <MainButton

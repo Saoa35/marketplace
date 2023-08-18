@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
 import {SearchInput} from '../components/inputs/SearchInput';
@@ -38,6 +38,7 @@ function HomeScreen({userData}) {
           marginBottom: 100,
         });
       }
+
       setIsLoading(false);
     } catch (error) {
       Snackbar.show({
@@ -86,6 +87,9 @@ function HomeScreen({userData}) {
           <FlatList
             data={filteredList}
             keyExtractor={item => item.id}
+            refreshControl={
+              <RefreshControl refreshing={isLoading} onRefresh={getGoods} />
+            }
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<EmptyList />}
             contentContainerStyle={{
