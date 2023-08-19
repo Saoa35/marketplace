@@ -6,21 +6,86 @@ import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import {AddedImage} from '../components/AddedImage';
 import {useNavigation} from '@react-navigation/native';
+import Snackbar from 'react-native-snackbar';
+import axios from 'axios';
+import {Loader} from '../components/Loader';
 
-function AddProductScreen() {
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
+function AddProductScreen({userData}) {
+  const [productName, setProductName] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productDescription, setProductDescription] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
+
+  const addNewProduct = async () => {
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/products',
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+          body: {
+            title: productName,
+            description: productDescription,
+            price: productPrice,
+            images: [],
+          },
+        },
+      );
+
+      setIsLoading(true);
+
+      if (response.status === 200) {
+        setIsLoading(false);
+
+        navigation.navigate('Home');
+
+        Snackbar.show({
+          text: `Product ${productName} was successfuly added`,
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      } else {
+        Snackbar.show({
+          text: 'Can`t find product information',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+
+      setIsLoading(false);
+
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <View style={styles.addContainer}>
       <View style={styles.titleInputWrapper}>
         <Text style={styles.label}>Title</Text>
         <TextInput
-          value={title}
-          onChangeText={e => setTitle(e)}
+          value={productName}
+          onChangeText={e => setProductName(e)}
           placeholder="Title"
           style={styles.input}
         />
@@ -30,8 +95,8 @@ function AddProductScreen() {
       <View style={styles.titleInputWrapper}>
         <Text style={styles.label}>Price</Text>
         <TextInput
-          value={price}
-          onChangeText={e => setPrice(e)}
+          value={productPrice}
+          onChangeText={e => setProductPrice(e)}
           placeholder="Price"
           style={styles.input}
         />
@@ -41,8 +106,8 @@ function AddProductScreen() {
       <View style={styles.descriptionWrapper}>
         <Text style={styles.label}>Description</Text>
         <TextInput
-          value={description}
-          onChangeText={e => setDescription(e)}
+          value={productDescription}
+          onChangeText={e => setProductDescription(e)}
           multiline
           numberOfLines={6}
           placeholder="Type here"
@@ -60,7 +125,7 @@ function AddProductScreen() {
               style={{fontSize: 30, color: COLORS.buttonTextColor}}
             />
           }
-          onPressFunction={() => navigation.navigate('Home')}
+          onPressFunction={addNewProduct}
         />
         <Text style={{width: 20}}></Text>
         <MainButton
