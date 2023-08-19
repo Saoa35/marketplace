@@ -41,6 +41,8 @@ function SignUpScreen({setuserData}) {
         if (response.status === 200) {
           setuserData(response.data);
 
+          console.log(response.data);
+
           navigation.navigate('TabNavigation');
         } else {
           Snackbar.show({

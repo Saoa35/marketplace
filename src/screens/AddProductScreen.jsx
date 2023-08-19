@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 
 function AddProductScreen() {
   const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
 
   const navigation = useNavigation();
@@ -24,6 +25,17 @@ function AddProductScreen() {
           style={styles.input}
         />
         <Text style={styles.requiredText}>Title is required</Text>
+      </View>
+
+      <View style={styles.titleInputWrapper}>
+        <Text style={styles.label}>Price</Text>
+        <TextInput
+          value={price}
+          onChangeText={e => setPrice(e)}
+          placeholder="Price"
+          style={styles.input}
+        />
+        <Text style={styles.requiredText}>Price is required</Text>
       </View>
 
       <View style={styles.descriptionWrapper}>
@@ -84,15 +96,14 @@ const styles = StyleSheet.create({
   },
   titleInputWrapper: {
     width: '90%',
-    marginBottom: 30,
-    marginTop: 40,
+    marginTop: 10,
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     color: COLORS.title,
   },
   input: {
-    fontSize: 16,
+    fontSize: 14,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.title,
     letterSpacing: 1,
@@ -101,7 +112,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   descriptionWrapper: {
-    marginBottom: 35,
+    marginTop: 10,
+    marginBottom: 20,
     width: '90%',
   },
   descriptionInput: {
@@ -127,7 +139,7 @@ const styles = StyleSheet.create({
   buttonsWrapper: {
     flexDirection: 'row',
     paddingHorizontal: 25,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   imagesContainer: {
     width: '90%',
