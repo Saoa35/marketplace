@@ -46,21 +46,32 @@ function AddProductScreen({userData}) {
       name: result.assets[0].fileName,
     });
 
-    const response = await axios.post(
-      'https://rn.binary-travel-app.xyz/api/v1/images',
-      formdata,
-      {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-          'Content-Type': 'multipart/form-data',
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/images',
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      },
-    );
+      );
 
-    addPhoto(response.data.url, response.data.id);
+      addPhoto(response.data.url, response.data.id);
 
-    if (productImages.length < 5) {
-      setImagesList([...imagesList, response.data.id]);
+      if (productImages.length < 5) {
+        setImagesList([...imagesList, response.data.id]);
+      }
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+
+      console.log(error);
     }
   };
 
@@ -138,8 +149,6 @@ function AddProductScreen({userData}) {
           });
         }
 
-        console.log(response);
-
         setIsLoading(false);
       }
     } catch (error) {
@@ -161,8 +170,6 @@ function AddProductScreen({userData}) {
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log(imagesList);
 
   return (
     <View style={styles.addContainer}>
