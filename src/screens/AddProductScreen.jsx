@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import Snackbar from 'react-native-snackbar';
 import axios from 'axios';
 import {Loader} from '../components/Loader';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function AddProductScreen({userData}) {
   const [productName, setProductName] = useState('');
@@ -20,6 +21,24 @@ function AddProductScreen({userData}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
+
+  const options = {
+    title: 'Select Image',
+    type: 'library',
+    options: {
+      maxHeight: 200,
+      maxWidth: 200,
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: false,
+    },
+  };
+
+  const openGallery = async () => {
+    const result = await launchImageLibrary(options);
+
+    console.log(result);
+  };
 
   // const addPhoto = image => {
   //   if (productImages.length < 5) {
