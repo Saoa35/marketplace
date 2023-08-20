@@ -21,13 +21,43 @@ function AddProductScreen({userData}) {
 
   const navigation = useNavigation();
 
-  const addPhoto = image => {
+  // const addPhoto = image => {
+  //   if (productImages.length < 5) {
+  //     const newImage = {id: Date.now(), image};
+
+  //     setProductImages([...productImages, newImage]);
+  //   } else {
+  //     Snackbar.show({
+  //       text: 'You can only add up to 5 images',
+  //       backgroundColor: COLORS.red,
+  //       duration: Snackbar.LENGTH_LONG,
+  //       marginBottom: 100,
+  //     });
+  //   }
+  // };
+
+  const addPhoto = async () => {
     if (productImages.length < 5) {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/images',
+        {
+          title: productName,
+          description: productDescription,
+          price: productPrice,
+          images: [],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
+
+      console.log(response.data);
+
       const newImage = {id: Date.now(), image};
 
       setProductImages([...productImages, newImage]);
-
-      console.log(newImage);
     } else {
       Snackbar.show({
         text: 'You can only add up to 5 images',
@@ -77,6 +107,7 @@ function AddProductScreen({userData}) {
           setProductName('');
           setProductPrice('');
           setProductDescription('');
+          setIsRequired(false);
 
           navigation.navigate('Home');
 
@@ -118,8 +149,6 @@ function AddProductScreen({userData}) {
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log(productImages.length);
 
   return (
     <View style={styles.addContainer}>

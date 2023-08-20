@@ -100,6 +100,8 @@ function Navigation() {
   const [userData, setuserData] = useState(null);
   const [productId, setProductId] = useState('');
 
+  // console.log(userData);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
