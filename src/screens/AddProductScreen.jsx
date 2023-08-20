@@ -17,7 +17,7 @@ function AddProductScreen({userData}) {
   const [productDescription, setProductDescription] = useState('');
   const [isRequired, setIsRequired] = useState(false);
   const [productImages, setProductImages] = useState([]);
-  const [imagesList, setImagesList] = [];
+  const [imagesList, setImagesList] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,9 +57,11 @@ function AddProductScreen({userData}) {
       },
     );
 
-    // console.log(response.data);
-
     addPhoto(response.data.url, response.data.id);
+
+    if (productImages.length < 5) {
+      setImagesList([...imagesList, response.data.id]);
+    }
   };
 
   const addPhoto = (image, id) => {
@@ -79,6 +81,7 @@ function AddProductScreen({userData}) {
 
   const deletePhoto = id => {
     setProductImages(productImages.filter(image => image.id !== id));
+    setImagesList(imagesList.filter(image => image !== id));
   };
 
   const addNewProduct = async () => {
@@ -99,7 +102,7 @@ function AddProductScreen({userData}) {
             title: productName,
             description: productDescription,
             price: productPrice,
-            images: [],
+            images: imagesList,
           },
           {
             headers: {
@@ -158,6 +161,8 @@ function AddProductScreen({userData}) {
   if (isLoading) {
     return <Loader />;
   }
+
+  console.log(imagesList);
 
   return (
     <View style={styles.addContainer}>
