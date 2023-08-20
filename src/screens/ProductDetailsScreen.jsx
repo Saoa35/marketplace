@@ -78,7 +78,7 @@ function ProductDetailsScreen({userData, productId}) {
 
         Snackbar.show({
           text: `Product ${product?.title} was successfuly deleted`,
-          backgroundColor: COLORS.red,
+          backgroundColor: COLORS.title,
           duration: Snackbar.LENGTH_LONG,
           marginBottom: 100,
         });
@@ -122,7 +122,7 @@ function ProductDetailsScreen({userData, productId}) {
 
   return (
     <View style={styles.productContainer}>
-      {product?.images ? (
+      {product?.images.length ? (
         <Swiper
           style={{width: '100%', height: '100%'}}
           loadMinimalLoader={

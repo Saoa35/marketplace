@@ -131,12 +131,13 @@ function AddProductScreen({userData}) {
           setProductPrice('');
           setProductDescription('');
           setIsRequired(false);
+          setProductImages([]);
 
           navigation.navigate('Home');
 
           Snackbar.show({
             text: `Product ${productName} was successfuly added`,
-            backgroundColor: COLORS.red,
+            backgroundColor: COLORS.green,
             duration: Snackbar.LENGTH_LONG,
             marginBottom: 100,
           });
