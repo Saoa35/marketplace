@@ -81,7 +81,7 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
       if (resp.status === 200 && response.status === 201) {
         Snackbar.show({
           text: 'User settings updated successfully',
-          backgroundColor: COLORS.red,
+          backgroundColor: COLORS.green,
           duration: Snackbar.LENGTH_LONG,
           marginBottom: 100,
         });
