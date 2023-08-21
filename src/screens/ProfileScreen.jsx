@@ -78,8 +78,21 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
         },
       );
 
-      console.log(resp);
-      console.log(response);
+      if (resp.status === 200 && response.status === 201) {
+        Snackbar.show({
+          text: 'User settings updated successfully',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      } else {
+        Snackbar.show({
+          text: 'Something went wrong :(',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
     } catch (error) {
       Snackbar.show({
         text: error.message,
