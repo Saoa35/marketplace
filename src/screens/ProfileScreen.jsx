@@ -62,7 +62,23 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
         },
       );
 
-      setUserAvatar(response.data.url);
+      // setUserAvatar(response.data.url);
+
+      // const resp = await axios.patch(
+      //   'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
+      //   {
+      //     fullName: userName,
+      //     phoneNumber: phone,
+      //     avatar: response.data.id,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${userData.token}`,
+      //     },
+      //   },
+      // );
+
+      // console.log(resp.data);
     } catch (error) {
       Snackbar.show({
         text: error.message,
@@ -78,8 +94,6 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
   const addAvatar = () => {
     openGallery();
   };
-
-  // console.log(userData);
 
   return (
     <View style={styles.profileContainer}>
@@ -134,8 +148,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.gray,
   },
   avatarImage: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
     borderRadius: 9999,
   },
