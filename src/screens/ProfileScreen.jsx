@@ -25,8 +25,62 @@ function ProfileScreen({userData}) {
     setPhone(phoneNumber);
   }, [fullName, email, phoneNumber]);
 
+  const options = {
+    title: 'Select Image',
+    type: 'library',
+    options: {
+      maxHeight: 200,
+      maxWidth: 200,
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: false,
+    },
+  };
+
+  const openGallery = async () => {
+    const result = await launchImageLibrary(options);
+
+    console.log(result);
+
+    // const formdata = new FormData();
+
+    // formdata.append('file', {
+    //   uri: result.assets[0].uri,
+    //   type: result.assets[0].type,
+    //   name: result.assets[0].fileName,
+    // });
+
+    // try {
+    //   const response = await axios.post(
+    //     'https://rn.binary-travel-app.xyz/api/v1/images',
+    //     formdata,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${userData.token}`,
+    //         'Content-Type': 'multipart/form-data',
+    //       },
+    //     },
+    //   );
+
+    //   addPhoto(response.data.url, response.data.id);
+
+    //   if (productImages.length < 5) {
+    //     setImagesList([...imagesList, response.data.id]);
+    //   }
+    // } catch (error) {
+    //   Snackbar.show({
+    //     text: error.message,
+    //     backgroundColor: COLORS.red,
+    //     duration: Snackbar.LENGTH_LONG,
+    //     marginBottom: 100,
+    //   });
+
+    //   console.log(error);
+    // }
+  };
+
   const addAvatar = () => {
-    return console.log('Avatar was added');
+    openGallery();
   };
 
   // console.log(userData);

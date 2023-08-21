@@ -3,9 +3,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../styles/styles';
 
-export const EditButton = () => {
+export const EditButton = ({onPressFunction}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => onPressFunction()}
+      style={styles.container}>
       <MaterialIcons name="edit" style={styles.image} />
     </TouchableOpacity>
   );
