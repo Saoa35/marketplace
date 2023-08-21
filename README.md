@@ -1,4 +1,11 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli). This is mobile app marketplace when you can Sign Up or Sign In, after avtorization you can see all the products, also you can add your own product and delete it, you can change your profile settings wich include avatar, name and phone number. Project was created by using: React Native, React Hooks, REST API, Axios, React Native Navigation, React Native image picker... 
+
+![Screenshot 2023-08-21 144443](https://github.com/Saoa35/marketplace-mobile-app/assets/78507597/28826406-80ec-4e9b-920e-9c2019824ca0)
+![Screenshot 2023-08-21 144505](https://github.com/Saoa35/marketplace-mobile-app/assets/78507597/2d1f7585-d1d7-459e-b495-76e94fca9cfd)
+![Screenshot 2023-08-20 164938](https://github.com/Saoa35/marketplace-mobile-app/assets/78507597/18c67341-138a-4352-97de-83238551f249)
+![Screenshot 2023-08-21 142307](https://github.com/Saoa35/marketplace-mobile-app/assets/78507597/1643123a-e20b-4f41-9eed-17a589cad109)
+![Screenshot 2023-08-20 152756](https://github.com/Saoa35/marketplace-mobile-app/assets/78507597/3a824f84-fe6f-431d-8d0c-9ce19c9da9ea)
+![Screenshot 2023-08-21 144257](https://github.com/Saoa35/marketplace-mobile-app/assets/78507597/9ce40c4a-10cf-44e3-8984-7fc08d5313d2)
 
 # Getting Started
 
