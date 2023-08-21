@@ -4,18 +4,22 @@ import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
-import axios from 'axios';
+// import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {getUserData} from '../redux/slices/userSlice';
 
 // email: arthur.dent@mail.com
 // password: pa$Sword
 
-function SignInScreen({setuserData}) {
+function SignInScreen() {
   const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
@@ -27,26 +31,26 @@ function SignInScreen({setuserData}) {
           marginBottom: 100,
         });
       } else {
-        const response = await axios.post(
-          'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
-          {
-            email: userEmail,
-            password: password,
-          },
-        );
+        dispatch(getUserData());
 
-        if (response.status === 200) {
-          setuserData(response.data);
-
-          navigation.navigate('TabNavigation');
-        } else {
-          Snackbar.show({
-            text: 'Something went wrong :(',
-            backgroundColor: COLORS.red,
-            duration: Snackbar.LENGTH_LONG,
-            marginBottom: 100,
-          });
-        }
+        // const response = await axios.post(
+        //   'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
+        //   {
+        //     email: userEmail,
+        //     password: password,
+        //   },
+        // );
+        // if (response.status === 200) {
+        //   setuserData(response.data);
+        //   navigation.navigate('TabNavigation');
+        // } else {
+        //   Snackbar.show({
+        //     text: 'Something went wrong :(',
+        //     backgroundColor: COLORS.red,
+        //     duration: Snackbar.LENGTH_LONG,
+        //     marginBottom: 100,
+        //   });
+        // }
       }
     } catch (error) {
       Snackbar.show({
