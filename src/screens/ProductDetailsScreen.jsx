@@ -17,7 +17,7 @@ import axios from 'axios';
 import {Loader} from '../components/Loader';
 import Snackbar from 'react-native-snackbar';
 
-function ProductDetailsScreen({userData, productId}) {
+function ProductDetailsScreen({userData, productId, userAvatar}) {
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState(null);
 

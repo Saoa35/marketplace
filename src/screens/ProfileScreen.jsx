@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {COLORS} from '../styles/styles';
 import {EditButton} from '../components/buttons/EditButton';
@@ -12,7 +12,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
 import axios from 'axios';
 
-function ProfileScreen({userData}) {
+function ProfileScreen({userData, userAvatar, setUserAvatar}) {
   const [userName, setUserName] = useState(fullName);
   const [userEmail, setEmail] = useState(email);
   const [phone, setPhone] = useState(phoneNumber);
@@ -62,7 +62,7 @@ function ProfileScreen({userData}) {
         },
       );
 
-      console.log(response.data);
+      setUserAvatar(response.data.url);
     } catch (error) {
       Snackbar.show({
         text: error.message,
@@ -76,7 +76,6 @@ function ProfileScreen({userData}) {
   };
 
   const addAvatar = () => {
-    // console.log('AddAvater Click');
     openGallery();
   };
 
@@ -85,7 +84,11 @@ function ProfileScreen({userData}) {
   return (
     <View style={styles.profileContainer}>
       <View style={styles.imageWrapper}>
-        <SimpleLineIcons name="user" style={styles.avatar} />
+        {userAvatar !== null ? (
+          <Image source={{uri: userAvatar}} style={styles.avatarImage} />
+        ) : (
+          <SimpleLineIcons name="user" style={styles.avatar} />
+        )}
         <EditButton onPressFunction={addAvatar} />
       </View>
 
@@ -129,6 +132,12 @@ const styles = StyleSheet.create({
     fontSize: 130,
     color: COLORS.buttonTextColor,
     backgroundColor: COLORS.gray,
+  },
+  avatarImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    borderRadius: 9999,
   },
   buttonWrapper: {
     width: '100%',
