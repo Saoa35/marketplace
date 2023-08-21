@@ -8,6 +8,7 @@ import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {MainButton} from '../components/buttons/MainButton';
 import {useNavigation} from '@react-navigation/native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function ProfileScreen({userData}) {
   const [userName, setUserName] = useState(fullName);
@@ -24,13 +25,17 @@ function ProfileScreen({userData}) {
     setPhone(phoneNumber);
   }, [fullName, email, phoneNumber]);
 
+  const addAvatar = () => {
+    return console.log('Avatar was added');
+  };
+
   // console.log(userData);
 
   return (
     <View style={styles.profileContainer}>
       <View style={styles.imageWrapper}>
         <SimpleLineIcons name="user" style={styles.avatar} />
-        <EditButton />
+        <EditButton onPressFunction={addAvatar} />
       </View>
 
       <NameInput userName={userName} setUserName={setUserName} />
