@@ -16,7 +16,13 @@ import AddProductScreen from './AddProductScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = ({userData, productId, setProductId}) => {
+const TabNavigation = ({
+  userData,
+  productId,
+  setProductId,
+  userAvatar,
+  setUserAvatar,
+}) => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -58,7 +64,13 @@ const TabNavigation = ({userData, productId, setProductId}) => {
           tabBarInactiveTintColor: COLORS.gray,
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}>
-        {() => <ProfileScreen userData={userData} />}
+        {() => (
+          <ProfileScreen
+            userData={userData}
+            userAvatar={userAvatar}
+            setUserAvatar={setUserAvatar}
+          />
+        )}
       </Tab.Screen>
 
       <Tab.Screen
@@ -69,7 +81,11 @@ const TabNavigation = ({userData, productId, setProductId}) => {
           headerLeft: () => <LeftArrowButton />,
         })}>
         {() => (
-          <ProductDetailsScreen userData={userData} productId={productId} />
+          <ProductDetailsScreen
+            userData={userData}
+            productId={productId}
+            userAvatar={userAvatar}
+          />
         )}
       </Tab.Screen>
 
@@ -99,8 +115,7 @@ const TabNavigation = ({userData, productId, setProductId}) => {
 function Navigation() {
   const [userData, setuserData] = useState(null);
   const [productId, setProductId] = useState('');
-
-  // console.log(userData);
+  const [userAvatar, setUserAvatar] = useState(null);
 
   return (
     <NavigationContainer>
@@ -119,6 +134,8 @@ function Navigation() {
               userData={userData}
               productId={productId}
               setProductId={setProductId}
+              userAvatar={userAvatar}
+              setUserAvatar={setUserAvatar}
             />
           )}
         </Stack.Screen>

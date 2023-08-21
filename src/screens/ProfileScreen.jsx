@@ -9,6 +9,8 @@ import {PhoneInput} from '../components/inputs/PhoneInput';
 import {MainButton} from '../components/buttons/MainButton';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import Snackbar from 'react-native-snackbar';
+import axios from 'axios';
 
 function ProfileScreen({userData}) {
   const [userName, setUserName] = useState(fullName);
@@ -40,46 +42,41 @@ function ProfileScreen({userData}) {
   const openGallery = async () => {
     const result = await launchImageLibrary(options);
 
-    console.log(result);
+    const formdata = new FormData();
 
-    // const formdata = new FormData();
+    formdata.append('file', {
+      uri: result.assets[0].uri,
+      type: result.assets[0].type,
+      name: result.assets[0].fileName,
+    });
 
-    // formdata.append('file', {
-    //   uri: result.assets[0].uri,
-    //   type: result.assets[0].type,
-    //   name: result.assets[0].fileName,
-    // });
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/images',
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
 
-    // try {
-    //   const response = await axios.post(
-    //     'https://rn.binary-travel-app.xyz/api/v1/images',
-    //     formdata,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${userData.token}`,
-    //         'Content-Type': 'multipart/form-data',
-    //       },
-    //     },
-    //   );
+      console.log(response.data);
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
 
-    //   addPhoto(response.data.url, response.data.id);
-
-    //   if (productImages.length < 5) {
-    //     setImagesList([...imagesList, response.data.id]);
-    //   }
-    // } catch (error) {
-    //   Snackbar.show({
-    //     text: error.message,
-    //     backgroundColor: COLORS.red,
-    //     duration: Snackbar.LENGTH_LONG,
-    //     marginBottom: 100,
-    //   });
-
-    //   console.log(error);
-    // }
+      console.log(error);
+    }
   };
 
   const addAvatar = () => {
+    // console.log('AddAvater Click');
     openGallery();
   };
 
