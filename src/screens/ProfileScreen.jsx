@@ -62,23 +62,24 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
         },
       );
 
-      // setUserAvatar(response.data.url);
+      setUserAvatar(response.data.url);
 
-      // const resp = await axios.patch(
-      //   'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
-      //   {
-      //     fullName: userName,
-      //     phoneNumber: phone,
-      //     avatar: response.data.id,
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${userData.token}`,
-      //     },
-      //   },
-      // );
+      const resp = await axios.patch(
+        'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
+        {
+          fullName: userName,
+          phoneNumber: phone,
+          avatar: response.data.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
 
-      // console.log(resp.data);
+      console.log(resp);
+      console.log(response);
     } catch (error) {
       Snackbar.show({
         text: error.message,
@@ -100,6 +101,11 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
       <View style={styles.imageWrapper}>
         {userAvatar !== null ? (
           <Image source={{uri: userAvatar}} style={styles.avatarImage} />
+        ) : userData.user.avatar ? (
+          <Image
+            source={{uri: userData.user.avatar}}
+            style={styles.avatarImage}
+          />
         ) : (
           <SimpleLineIcons name="user" style={styles.avatar} />
         )}
