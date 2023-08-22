@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
-// import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {signInUser} from '../redux/slices/userSlice';
 
 // email: arthur.dent@mail.com
@@ -19,8 +18,9 @@ function SignInScreen() {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const userData = useSelector(state => state.user.userData);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!userEmail || !password) {
       Snackbar.show({
         text: 'Email and Password fields are required',
@@ -29,15 +29,14 @@ function SignInScreen() {
         marginBottom: 100,
       });
     } else {
-      dispatch(signInUser(userEmail, password));
+      try {
+        dispatch(signInUser({userEmail, password}));
 
-      if (status === 'fulfilled') {
-        navigation.navigate('TabNavigation');
-      }
-
-      if (status === 'rejected') {
+        setEmail('');
+        setPassword('');
+      } catch (error) {
         Snackbar.show({
-          text: 'Error, can`t Sign In',
+          text: error.message,
           backgroundColor: COLORS.red,
           duration: Snackbar.LENGTH_LONG,
           marginBottom: 100,
@@ -45,6 +44,10 @@ function SignInScreen() {
       }
     }
   };
+
+  if (userData.token) {
+    navigation.navigate('TabNavigation');
+  }
 
   return (
     <View style={styles.mainContainer}>

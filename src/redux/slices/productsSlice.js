@@ -7,15 +7,17 @@ const initialState = {
 
 export const getGoodsList = createAsyncThunk(
   'goodsList/getGoodsList',
-  async (_, {rejectWithValue, dispatch}) => {
-    const response = await axios.get(
-      'https://rn.binary-travel-app.xyz/api/v1/products',
-      {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
+  async (_, {rejectWithValue}) => {
+    try {
+      const response = await axios.get(
+        'https://rn.binary-travel-app.xyz/api/v1/products',
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
         },
-      },
-    );
+      );
+    } catch (error) {}
   },
 );
 

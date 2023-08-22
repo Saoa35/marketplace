@@ -3,16 +3,11 @@ import axios from 'axios';
 
 const initialState = {
   userData: {},
-  // token: null,
-  status: null,
 };
 
 export const signUpUser = createAsyncThunk(
   'userData/signUpUser',
-  async (
-    {userName, userEmail, phone, password},
-    {rejectWithValue, dispatch},
-  ) => {
+  async ({userName, userEmail, phone, password}) => {
     const response = await axios.post(
       'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
       {
@@ -28,7 +23,7 @@ export const signUpUser = createAsyncThunk(
 
 export const signInUser = createAsyncThunk(
   'userData/signInUser',
-  async ({userEmail, password}, {rejectWithValue, dispatch}) => {
+  async ({userEmail, password}, {rejectWithValue}) => {
     try {
       const response = await axios.post(
         'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
@@ -37,10 +32,11 @@ export const signInUser = createAsyncThunk(
           password: password,
         },
       );
-      // dispatch(setUserData(response.data));
+
       return response.data;
     } catch (error) {
       console.log(error);
+      return rejectWithValue(error.response.data);
     }
   },
 );
@@ -54,21 +50,27 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [signUpUser.fulfilled]: (state, action) => {
-      state.status === 'fulfilled';
-      state.userData = action.payload;
-      // state.token = action.payload.token;
-    },
-    [signUpUser.pending]: state => state.status === 'pending',
-    [signUpUser.rejected]: state => state.status === 'rejected',
+    // [signUpUser.fulfilled]: (state, action) => {
+    //   state.status = 'fulfilled';
+    //   state.userData = action.payload;
+    // },
+    // [signUpUser.pending]: state => {
+    //   state.status = 'pending';
+    // },
+    // [signUpUser.rejected]: state => {
+    //   state.status = 'rejected';
+    // },
 
     [signInUser.fulfilled]: (state, action) => {
-      state.status === 'fulfilled';
+      console.log('fulfilled');
       state.userData = action.payload;
-      // state.token = action.payload.token;
     },
-    [signInUser.pending]: state => state.status === 'pending',
-    [signInUser.rejected]: state => state.status === 'rejected',
+    [signInUser.pending]: () => {
+      console.log('pending');
+    },
+    [signInUser.rejected]: () => {
+      console.log('rejected');
+    },
   },
 });
 

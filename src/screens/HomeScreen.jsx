@@ -18,28 +18,17 @@ function HomeScreen({setProductId}) {
 
   const getGoods = async () => {
     try {
-      const response = await axios.get(
-        'https://rn.binary-travel-app.xyz/api/v1/products',
-        {
-          headers: {
-            // Authorization: `Bearer ${userData.token}`,
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyNjdjMDUwLWE4NGYtNGI2MS1iYWRiLTQ2MjQwOTY4ODMzNiIsImlhdCI6MTY5MjUxNDc5OSwiZXhwIjoxNjkyNjAxMTk5fQ.i6eIMOM0IYpsxxxS27wOOm7DUaWe-OLahGDvcGw1b9U',
-          },
-        },
-      );
-
-      if (response.status === 200) {
-        setGoodsList(response.data);
-        setfilteredList(response.data);
-      } else {
-        Snackbar.show({
-          text: 'Something went wrong :(',
-          backgroundColor: COLORS.red,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      }
+      // if (response.status === 200) {
+      //   setGoodsList(response.data);
+      //   setfilteredList(response.data);
+      // } else {
+      //   Snackbar.show({
+      //     text: 'Something went wrong :(',
+      //     backgroundColor: COLORS.red,
+      //     duration: Snackbar.LENGTH_LONG,
+      //     marginBottom: 100,
+      //   });
+      // }
 
       setIsLoading(false);
     } catch (error) {
