@@ -3,20 +3,22 @@ import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
 import {SearchInput} from '../components/inputs/SearchInput';
-import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
+import {useDispatch, useSelector} from 'react-redux';
 
 function HomeScreen({setProductId}) {
-  const [goodsList, setGoodsList] = useState([]);
+  // const [goodsList, setGoodsList] = useState([]);
   const [filteredList, setfilteredList] = useState([]);
 
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const getGoods = async () => {
+  const {token} = useSelector(state => state.user.userData.token);
+
+  const getGoods = () => {
     try {
       // if (response.status === 200) {
       //   setGoodsList(response.data);

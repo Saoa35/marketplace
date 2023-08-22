@@ -17,7 +17,6 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = ({
-  userData,
   productId,
   setProductId,
   userAvatar,
@@ -40,13 +39,7 @@ const TabNavigation = ({
           tabBarInactiveTintColor: COLORS.gray,
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}>
-        {() => (
-          <HomeScreen
-            userData={userData}
-            productId={productId}
-            setProductId={setProductId}
-          />
-        )}
+        {() => <HomeScreen productId={productId} setProductId={setProductId} />}
       </Tab.Screen>
 
       <Tab.Screen
@@ -66,7 +59,6 @@ const TabNavigation = ({
         }}>
         {() => (
           <ProfileScreen
-            userData={userData}
             userAvatar={userAvatar}
             setUserAvatar={setUserAvatar}
           />
@@ -81,11 +73,7 @@ const TabNavigation = ({
           headerLeft: () => <LeftArrowButton />,
         })}>
         {() => (
-          <ProductDetailsScreen
-            userData={userData}
-            productId={productId}
-            userAvatar={userAvatar}
-          />
+          <ProductDetailsScreen productId={productId} userAvatar={userAvatar} />
         )}
       </Tab.Screen>
 
@@ -113,25 +101,27 @@ const TabNavigation = ({
 };
 
 function Navigation() {
-  const [userData, setuserData] = useState(null);
   const [productId, setProductId] = useState('');
   const [userAvatar, setUserAvatar] = useState(null);
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="SignIn" options={{headerShown: false}}>
-          {() => <SignInScreen setuserData={setuserData} />}
-        </Stack.Screen>
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{headerShown: false}}
+        />
 
-        <Stack.Screen name="SignUp" options={{headerShown: false}}>
-          {() => <SignUpScreen setuserData={setuserData} />}
-        </Stack.Screen>
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{headerShown: false}}
+        />
 
         <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
           {() => (
             <TabNavigation
-              userData={userData}
               productId={productId}
               setProductId={setProductId}
               userAvatar={userAvatar}

@@ -7,35 +7,41 @@ const initialState = {
 
 export const getGoodsList = createAsyncThunk(
   'goodsList/getGoodsList',
-  async (_, {rejectWithValue}) => {
+  async ({token}, {rejectWithValue}) => {
     try {
       const response = await axios.get(
         'https://rn.binary-travel-app.xyz/api/v1/products',
         {
           headers: {
-            Authorization: `Bearer ${userData.token}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
-    } catch (error) {}
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   },
 );
 
-export const userSlice = createSlice({
-  name: 'user',
+export const productsSlice = createSlice({
+  name: 'products',
   initialState,
   reducers: {
-    setUserData: (state, action) => {
-      state.userData = action.payload;
+    setGoodsList: (state, action) => {
+      state.goodsList = action.payload;
     },
   },
   extraReducers: {
-    [getUserData.fulfilled]: () => console.log('fulfilled'),
-    [getUserData.pending]: () => console.log('pending'),
-    [getUserData.rejected]: () => console.log('rejected'),
+    [getGoodsList.fulfilled]: () => console.log('fulfilled'),
+    [getGoodsList.pending]: () => console.log('pending'),
+    [getGoodsList.rejected]: () => console.log('rejected'),
   },
 });
 
-export const {setUserData} = userSlice.actions;
+export const {setGoodsList} = productsSlice.actions;
 
-export default userSlice.reducer;
+export default productsSlice.reducer;
