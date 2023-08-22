@@ -8,7 +8,7 @@ import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {getUserDataSignIn} from '../redux/slices/userSlice';
+import {signInUser} from '../redux/slices/userSlice';
 
 // email: arthur.dent@mail.com
 // password: pa$Sword
@@ -21,45 +21,28 @@ function SignInScreen() {
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    try {
-      if (!userEmail || !password) {
-        Snackbar.show({
-          text: 'Email and Password fields are required',
-          backgroundColor: COLORS.red,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      } else {
-        dispatch(getUserDataSignIn());
-
-        // const response = await axios.post(
-        //   'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
-        //   {
-        //     email: userEmail,
-        //     password: password,
-        //   },
-        // );
-        // if (response.status === 200) {
-        //   setuserData(response.data);
-        //   navigation.navigate('TabNavigation');
-        // } else {
-        //   Snackbar.show({
-        //     text: 'Something went wrong :(',
-        //     backgroundColor: COLORS.red,
-        //     duration: Snackbar.LENGTH_LONG,
-        //     marginBottom: 100,
-        //   });
-        // }
-      }
-    } catch (error) {
+    if (!userEmail || !password) {
       Snackbar.show({
-        text: error.message,
+        text: 'Email and Password fields are required',
         backgroundColor: COLORS.red,
         duration: Snackbar.LENGTH_LONG,
         marginBottom: 100,
       });
+    } else {
+      dispatch(signInUser(userEmail, password));
 
-      console.log(error.message);
+      if (status === 'fulfilled') {
+        navigation.navigate('TabNavigation');
+      }
+
+      if (status === 'rejected') {
+        Snackbar.show({
+          text: 'Error, can`t Sign In',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
     }
   };
 

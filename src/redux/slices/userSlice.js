@@ -3,11 +3,16 @@ import axios from 'axios';
 
 const initialState = {
   userData: {},
+  // token: null,
+  status: null,
 };
 
-export const getUserDataSignUp = createAsyncThunk(
-  'userData/getUserData',
-  async (_, {rejectWithValue, dispatch}) => {
+export const signUpUser = createAsyncThunk(
+  'userData/signUpUser',
+  async (
+    {userName, userEmail, phone, password},
+    {rejectWithValue, dispatch},
+  ) => {
     const response = await axios.post(
       'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
       {
@@ -21,19 +26,22 @@ export const getUserDataSignUp = createAsyncThunk(
   },
 );
 
-export const getUserDataSignIn = createAsyncThunk(
-  'userData/getUserData',
-  async (_, {rejectWithValue, dispatch}) => {
-    const response = await axios.post(
-      'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
-      {
-        // email: userEmail,
-        // password: password,
-        email: 'arthur.dent@mail.com',
-        password: 'pa$Sword',
-      },
-    );
-    dispatch(setUserData(response.data));
+export const signInUser = createAsyncThunk(
+  'userData/signInUser',
+  async ({userEmail, password}, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
+        {
+          email: userEmail,
+          password: password,
+        },
+      );
+      // dispatch(setUserData(response.data));
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   },
 );
 
@@ -46,13 +54,21 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [getUserDataSignUp.fulfilled]: () => console.log('fulfilled'),
-    [getUserDataSignUp.pending]: () => console.log('pending'),
-    [getUserDataSignUp.rejected]: () => console.log('rejected'),
+    [signUpUser.fulfilled]: (state, action) => {
+      state.status === 'fulfilled';
+      state.userData = action.payload;
+      // state.token = action.payload.token;
+    },
+    [signUpUser.pending]: state => state.status === 'pending',
+    [signUpUser.rejected]: state => state.status === 'rejected',
 
-    [getUserDataSignIn.fulfilled]: () => console.log('fulfilled'),
-    [getUserDataSignIn.pending]: () => console.log('pending'),
-    [getUserDataSignIn.rejected]: () => console.log('rejected'),
+    [signInUser.fulfilled]: (state, action) => {
+      state.status === 'fulfilled';
+      state.userData = action.payload;
+      // state.token = action.payload.token;
+    },
+    [signInUser.pending]: state => state.status === 'pending',
+    [signInUser.rejected]: state => state.status === 'rejected',
   },
 });
 

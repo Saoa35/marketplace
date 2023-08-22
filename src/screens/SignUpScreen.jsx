@@ -9,7 +9,7 @@ import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {getUserDataSignUp} from '../redux/slices/userSlice';
+import {signUpUser} from '../redux/slices/userSlice';
 
 function SignUpScreen() {
   const [userName, setUserName] = useState('');
@@ -30,28 +30,12 @@ function SignUpScreen() {
           marginBottom: 50,
         });
       } else {
-        dispatch(getUserDataSignUp());
+        dispatch(signUpUser(userName, userEmail, phone, password));
 
-        //   const response = await axios.post(
-        //     'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
-        //     {
-        //       fullName: userName,
-        //       email: userEmail,
-        //       phoneNumber: phone,
-        //       password: password,
-        //     },
-        //   );
         //   if (response.status === 200) {
         //     setuserData(response.data);
         //     console.log(response.data);
         //     navigation.navigate('TabNavigation');
-        //   } else {
-        //     Snackbar.show({
-        //       text: 'Something went wrong :(',
-        //       backgroundColor: COLORS.red,
-        //       duration: Snackbar.LENGTH_LONG,
-        //       marginBottom: 100,
-        //     });
         //   }
       }
     } catch (error) {
