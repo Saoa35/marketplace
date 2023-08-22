@@ -5,8 +5,8 @@ const initialState = {
   goodsList: [],
 };
 
-export const get = createAsyncThunk(
-  'userData/getUserData',
+export const getGoodsList = createAsyncThunk(
+  'goodsList/getGoodsList',
   async (_, {rejectWithValue, dispatch}) => {
     const response = await axios.get(
       'https://rn.binary-travel-app.xyz/api/v1/products',

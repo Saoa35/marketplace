@@ -5,7 +5,23 @@ const initialState = {
   userData: {},
 };
 
-export const getUserData = createAsyncThunk(
+export const getUserDataSignUp = createAsyncThunk(
+  'userData/getUserData',
+  async (_, {rejectWithValue, dispatch}) => {
+    const response = await axios.post(
+      'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+      {
+        fullName: userName,
+        email: userEmail,
+        phoneNumber: phone,
+        password: password,
+      },
+    );
+    dispatch(setUserData(response.data));
+  },
+);
+
+export const getUserDataSignIn = createAsyncThunk(
   'userData/getUserData',
   async (_, {rejectWithValue, dispatch}) => {
     const response = await axios.post(
@@ -30,9 +46,13 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [getUserData.fulfilled]: () => console.log('fulfilled'),
-    [getUserData.pending]: () => console.log('pending'),
-    [getUserData.rejected]: () => console.log('rejected'),
+    [getUserDataSignUp.fulfilled]: () => console.log('fulfilled'),
+    [getUserDataSignUp.pending]: () => console.log('pending'),
+    [getUserDataSignUp.rejected]: () => console.log('rejected'),
+
+    [getUserDataSignIn.fulfilled]: () => console.log('fulfilled'),
+    [getUserDataSignIn.pending]: () => console.log('pending'),
+    [getUserDataSignIn.rejected]: () => console.log('rejected'),
   },
 });
 

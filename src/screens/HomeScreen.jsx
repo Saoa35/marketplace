@@ -9,7 +9,7 @@ import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
 
-function HomeScreen({userData, setProductId}) {
+function HomeScreen({setProductId}) {
   const [goodsList, setGoodsList] = useState([]);
   const [filteredList, setfilteredList] = useState([]);
 
@@ -22,7 +22,9 @@ function HomeScreen({userData, setProductId}) {
         'https://rn.binary-travel-app.xyz/api/v1/products',
         {
           headers: {
-            Authorization: `Bearer ${userData.token}`,
+            // Authorization: `Bearer ${userData.token}`,
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyNjdjMDUwLWE4NGYtNGI2MS1iYWRiLTQ2MjQwOTY4ODMzNiIsImlhdCI6MTY5MjUxNDc5OSwiZXhwIjoxNjkyNjAxMTk5fQ.i6eIMOM0IYpsxxxS27wOOm7DUaWe-OLahGDvcGw1b9U',
           },
         },
       );

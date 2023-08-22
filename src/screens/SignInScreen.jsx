@@ -8,7 +8,7 @@ import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {getUserData} from '../redux/slices/userSlice';
+import {getUserDataSignIn} from '../redux/slices/userSlice';
 
 // email: arthur.dent@mail.com
 // password: pa$Sword
@@ -18,7 +18,6 @@ function SignInScreen() {
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
-
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
@@ -31,7 +30,7 @@ function SignInScreen() {
           marginBottom: 100,
         });
       } else {
-        dispatch(getUserData());
+        dispatch(getUserDataSignIn());
 
         // const response = await axios.post(
         //   'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',

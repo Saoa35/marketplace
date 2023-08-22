@@ -6,17 +6,19 @@ import {NameInput} from '../components/inputs/NameInput';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
-import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {getUserDataSignUp} from '../redux/slices/userSlice';
 
-function SignUpScreen({setuserData}) {
+function SignUpScreen() {
   const [userName, setUserName] = useState('');
   const [userEmail, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
@@ -28,30 +30,29 @@ function SignUpScreen({setuserData}) {
           marginBottom: 50,
         });
       } else {
-        const response = await axios.post(
-          'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
-          {
-            fullName: userName,
-            email: userEmail,
-            phoneNumber: phone,
-            password: password,
-          },
-        );
+        dispatch(getUserDataSignUp());
 
-        if (response.status === 200) {
-          setuserData(response.data);
-
-          console.log(response.data);
-
-          navigation.navigate('TabNavigation');
-        } else {
-          Snackbar.show({
-            text: 'Something went wrong :(',
-            backgroundColor: COLORS.red,
-            duration: Snackbar.LENGTH_LONG,
-            marginBottom: 100,
-          });
-        }
+        //   const response = await axios.post(
+        //     'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+        //     {
+        //       fullName: userName,
+        //       email: userEmail,
+        //       phoneNumber: phone,
+        //       password: password,
+        //     },
+        //   );
+        //   if (response.status === 200) {
+        //     setuserData(response.data);
+        //     console.log(response.data);
+        //     navigation.navigate('TabNavigation');
+        //   } else {
+        //     Snackbar.show({
+        //       text: 'Something went wrong :(',
+        //       backgroundColor: COLORS.red,
+        //       duration: Snackbar.LENGTH_LONG,
+        //       marginBottom: 100,
+        //     });
+        //   }
       }
     } catch (error) {
       Snackbar.show({
