@@ -16,7 +16,10 @@ import {useNavigation} from '@react-navigation/native';
 import {Loader} from '../components/Loader';
 import Snackbar from 'react-native-snackbar';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCurrentProduct} from '../redux/slices/productsSlice';
+import {
+  deleteCurrentProduct,
+  getCurrentProduct,
+} from '../redux/slices/productsSlice';
 
 function ProductDetailsScreen({userAvatar}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,51 +53,35 @@ function ProductDetailsScreen({userAvatar}) {
     }
   };
 
-  // const deleteProduct = async () => {
-  //   try {
-  //     const response = await axios.delete(
-  //       'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       },
-  //     );
+  const deleteProduct = async () => {
+    try {
+      dispatch(deleteCurrentProduct({token, productId})).then(() => {
+        setIsLoading(false);
+      });
 
-  //     if (response.status === 200) {
-  //       navigation.navigate('Home');
+      navigation.navigate('Home');
 
-  //       Snackbar.show({
-  //         text: `Product ${product?.title} was successfuly deleted`,
-  //         backgroundColor: COLORS.title,
-  //         duration: Snackbar.LENGTH_LONG,
-  //         marginBottom: 100,
-  //       });
-  //     } else {
-  //       Snackbar.show({
-  //         text: 'Can`t delete product',
-  //         backgroundColor: COLORS.red,
-  //         duration: Snackbar.LENGTH_LONG,
-  //         marginBottom: 100,
-  //       });
-  //     }
+      Snackbar.show({
+        text: `Product ${currentProduct?.title} was successfuly deleted`,
+        backgroundColor: COLORS.title,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
 
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     Snackbar.show({
-  //       text: error.message,
-  //       backgroundColor: COLORS.red,
-  //       duration: Snackbar.LENGTH_LONG,
-  //       marginBottom: 100,
-  //     });
+      setIsLoading(false);
 
-  //     setIsLoading(false);
-
-  //     console.log(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -102,7 +89,7 @@ function ProductDetailsScreen({userAvatar}) {
   }, [productId]);
 
   const sellerId = currentProduct?.seller.id;
-  const userId = userData?.user.id;
+  const userId = userData?.user?.id;
 
   if (isLoading) {
     return <Loader />;
@@ -201,7 +188,7 @@ function ProductDetailsScreen({userAvatar}) {
                 style={{fontSize: 30, color: COLORS.buttonTextColor}}
               />
             }
-            // onPressFunction={deleteProduct}
+            onPressFunction={deleteProduct}
           />
         ) : (
           ''

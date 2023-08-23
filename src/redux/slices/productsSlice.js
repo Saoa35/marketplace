@@ -40,9 +40,25 @@ export const getCurrentProduct = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
-
       return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const deleteCurrentProduct = createAsyncThunk(
+  'currentProduct/deleteCurrentProduct',
+  async ({token, productId}, {rejectWithValue}) => {
+    try {
+      await axios.delete(
+        'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -71,6 +87,12 @@ export const productsSlice = createSlice({
     },
     [getCurrentProduct.pending]: () => console.log('CurrentProduct pending'),
     [getCurrentProduct.rejected]: () => console.log('CurrentProduct rejected'),
+
+    [deleteCurrentProduct.fulfilled]: () =>
+      console.log('DeleteProduct fulfilled'),
+    [deleteCurrentProduct.pending]: () => console.log('DeleteProduct pending'),
+    [deleteCurrentProduct.rejected]: () =>
+      console.log('DeleteProduct rejected'),
   },
 });
 
