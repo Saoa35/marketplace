@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
-import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
 import {useDispatch, useSelector} from 'react-redux';
-import Snackbar from 'react-native-snackbar';
 import {SearchInput} from '../components/inputs/SearchInput';
 import {getGoodsList} from '../redux/slices/productsSlice';
 
@@ -21,46 +19,22 @@ function HomeScreen({setProductId}) {
   const {token} = useSelector(state => state.user.userData);
   const {goodsList} = useSelector(state => state.products);
 
-  // const getGoods = () => {
-  //   try {
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     Snackbar.show({
-  //       text: error.message,
-  //       backgroundColor: COLORS.red,
-  //       duration: Snackbar.LENGTH_LONG,
-  //       marginBottom: 100,
-  //     });
-
-  //     setIsLoading(false);
-
-  //     console.log(error.message);
-  //   }
-  // };
-
   useEffect(() => {
     setIsLoading(true);
-    dispatch(getGoodsList({token}));
-    setfilteredList(goodsList);
-    // getGoods();
-    setIsLoading(false);
-  }, [filteredList]);
+    dispatch(getGoodsList({token})).then(() => {
+      setfilteredList(goodsList);
+      setIsLoading(false);
+    });
+  }, []);
 
   const searchFilter = text => {
-    if (text) {
-      const newData = goodsList.filter(item => {
-        const itemData = item.title
-          ? item.title.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setfilteredList(newData);
-      setSearchValue(text);
-    } else {
-      setfilteredList(goodsList);
-      setSearchValue(text);
-    }
+    const newData = goodsList.filter(item => {
+      const itemData = item.title ? item.title.toUpperCase() : '';
+      const textData = text.toUpperCase();
+      return itemData.includes(textData);
+    });
+    setfilteredList(newData);
+    setSearchValue(text);
   };
 
   return (
@@ -72,7 +46,7 @@ function HomeScreen({setProductId}) {
       ) : (
         <View style={styles.listContainer}>
           <FlatList
-            data={filteredList}
+            data={filteredList.length ? filteredList : goodsList}
             keyExtractor={item => item.id}
             refreshControl={
               <RefreshControl
