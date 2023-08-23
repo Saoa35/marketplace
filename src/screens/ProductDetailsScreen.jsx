@@ -13,10 +13,10 @@ import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
-import axios from 'axios';
 import {Loader} from '../components/Loader';
 import Snackbar from 'react-native-snackbar';
 import {useDispatch, useSelector} from 'react-redux';
+import {getCurrentProduct} from '../redux/slices/productsSlice';
 
 function ProductDetailsScreen({userAvatar}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,22 +25,15 @@ function ProductDetailsScreen({userAvatar}) {
   const dispatch = useDispatch();
 
   const {token} = useSelector(state => state.user.userData);
+  const {userData} = useSelector(state => state.user);
   const {productId} = useSelector(state => state.products);
+  const {currentProduct} = useSelector(state => state.products);
 
-  const getProduct = async () => {
+  const getProduct = () => {
     try {
-      // if (response.status === 200) {
-      //   setProduct(response.data);
-      // } else {
-      //   Snackbar.show({
-      //     text: 'Can`t find product information',
-      //     backgroundColor: COLORS.red,
-      //     duration: Snackbar.LENGTH_LONG,
-      //     marginBottom: 100,
-      //   });
-      // }
-
-      setIsLoading(false);
+      dispatch(getCurrentProduct({token, productId})).then(() => {
+        setIsLoading(false);
+      });
     } catch (error) {
       Snackbar.show({
         text: error.message,
@@ -108,7 +101,7 @@ function ProductDetailsScreen({userAvatar}) {
     getProduct();
   }, [productId]);
 
-  const sellerId = product?.seller.id;
+  const sellerId = currentProduct?.seller.id;
   const userId = userData?.user.id;
 
   if (isLoading) {
@@ -117,7 +110,7 @@ function ProductDetailsScreen({userAvatar}) {
 
   return (
     <View style={styles.productContainer}>
-      {product?.images.length ? (
+      {currentProduct?.images.length ? (
         <Swiper
           style={{width: '100%', height: '100%'}}
           loadMinimalLoader={
@@ -125,7 +118,7 @@ function ProductDetailsScreen({userAvatar}) {
           }
           showsButtons={true}
           showsPagination={false}>
-          {product.images.map((item, id) => (
+          {currentProduct.images.map((item, id) => (
             <Image
               key={id}
               source={{
@@ -146,19 +139,21 @@ function ProductDetailsScreen({userAvatar}) {
 
       <View style={styles.textContant}>
         <View style={styles.contantTitle}>
-          <Text style={styles.itemName}>{product?.title}</Text>
-          <Text style={styles.itemPrice}>${product?.price}</Text>
+          <Text style={styles.itemName}>{currentProduct?.title}</Text>
+          <Text style={styles.itemPrice}>${currentProduct?.price}</Text>
         </View>
         <ScrollView>
-          <Text style={styles.itemDescription}>{product?.description}</Text>
+          <Text style={styles.itemDescription}>
+            {currentProduct?.description}
+          </Text>
         </ScrollView>
       </View>
 
       <View style={styles.profileWrapper}>
         <View style={styles.profileImageWrapper}>
-          {product?.seller.avatar ? (
+          {currentProduct?.seller.avatar ? (
             <Image
-              source={{uri: product?.seller.avatar}}
+              source={{uri: currentProduct?.seller.avatar}}
               style={{width: 70, height: 70, borderRadius: 9999}}
             />
           ) : userAvatar ? (
@@ -171,8 +166,10 @@ function ProductDetailsScreen({userAvatar}) {
           )}
         </View>
         <View>
-          <Text style={styles.nameText}>{product?.seller.fullName}</Text>
-          <Text style={styles.phoneText}>+38{product?.seller.phoneNumber}</Text>
+          <Text style={styles.nameText}>{currentProduct?.seller.fullName}</Text>
+          <Text style={styles.phoneText}>
+            +38{currentProduct?.seller.phoneNumber}
+          </Text>
         </View>
       </View>
 
@@ -204,7 +201,7 @@ function ProductDetailsScreen({userAvatar}) {
                 style={{fontSize: 30, color: COLORS.buttonTextColor}}
               />
             }
-            onPressFunction={deleteProduct}
+            // onPressFunction={deleteProduct}
           />
         ) : (
           ''

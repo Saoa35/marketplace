@@ -29,7 +29,7 @@ export const getGoodsList = createAsyncThunk(
 
 export const getCurrentProduct = createAsyncThunk(
   'currentProduct/getCurrentProduct',
-  async ({token}, {rejectWithValue}) => {
+  async ({token, productId}, {rejectWithValue}) => {
     try {
       const response = await axios.get(
         'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
