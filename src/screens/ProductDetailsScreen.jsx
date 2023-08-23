@@ -16,34 +16,29 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {Loader} from '../components/Loader';
 import Snackbar from 'react-native-snackbar';
+import {useDispatch, useSelector} from 'react-redux';
 
-function ProductDetailsScreen({userData, productId, userAvatar}) {
+function ProductDetailsScreen({userAvatar}) {
   const [isLoading, setIsLoading] = useState(false);
-  const [product, setProduct] = useState(null);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const {token} = useSelector(state => state.user.userData);
+  const {productId} = useSelector(state => state.products);
 
   const getProduct = async () => {
     try {
-      const response = await axios.get(
-        'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        },
-      );
-
-      if (response.status === 200) {
-        setProduct(response.data);
-      } else {
-        Snackbar.show({
-          text: 'Can`t find product information',
-          backgroundColor: COLORS.red,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      }
+      // if (response.status === 200) {
+      //   setProduct(response.data);
+      // } else {
+      //   Snackbar.show({
+      //     text: 'Can`t find product information',
+      //     backgroundColor: COLORS.red,
+      //     duration: Snackbar.LENGTH_LONG,
+      //     marginBottom: 100,
+      //   });
+      // }
 
       setIsLoading(false);
     } catch (error) {
@@ -62,51 +57,51 @@ function ProductDetailsScreen({userData, productId, userAvatar}) {
     }
   };
 
-  const deleteProduct = async () => {
-    try {
-      const response = await axios.delete(
-        'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        },
-      );
+  // const deleteProduct = async () => {
+  //   try {
+  //     const response = await axios.delete(
+  //       'https://rn.binary-travel-app.xyz/api/v1/products/' + productId,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       },
+  //     );
 
-      if (response.status === 200) {
-        navigation.navigate('Home');
+  //     if (response.status === 200) {
+  //       navigation.navigate('Home');
 
-        Snackbar.show({
-          text: `Product ${product?.title} was successfuly deleted`,
-          backgroundColor: COLORS.title,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      } else {
-        Snackbar.show({
-          text: 'Can`t delete product',
-          backgroundColor: COLORS.red,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      }
+  //       Snackbar.show({
+  //         text: `Product ${product?.title} was successfuly deleted`,
+  //         backgroundColor: COLORS.title,
+  //         duration: Snackbar.LENGTH_LONG,
+  //         marginBottom: 100,
+  //       });
+  //     } else {
+  //       Snackbar.show({
+  //         text: 'Can`t delete product',
+  //         backgroundColor: COLORS.red,
+  //         duration: Snackbar.LENGTH_LONG,
+  //         marginBottom: 100,
+  //       });
+  //     }
 
-      setIsLoading(false);
-    } catch (error) {
-      Snackbar.show({
-        text: error.message,
-        backgroundColor: COLORS.red,
-        duration: Snackbar.LENGTH_LONG,
-        marginBottom: 100,
-      });
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     Snackbar.show({
+  //       text: error.message,
+  //       backgroundColor: COLORS.red,
+  //       duration: Snackbar.LENGTH_LONG,
+  //       marginBottom: 100,
+  //     });
 
-      setIsLoading(false);
+  //     setIsLoading(false);
 
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     console.log(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     setIsLoading(true);

@@ -2,12 +2,16 @@ import React, {memo} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setProductId} from '../redux/slices/productsSlice';
 
 export const ProductItem = memo(({item}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleCurrentProduct = () => {
-    // setProductId(item.id);
+    dispatch(setProductId(item.id));
+
     navigation.navigate('ProductDetails');
   };
 

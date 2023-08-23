@@ -58,14 +58,14 @@ export const userSlice = createSlice({
     // },
 
     [signInUser.fulfilled]: (state, action) => {
-      console.log('fulfilled');
+      console.log('SignInUser fulfilled');
       state.userData = action.payload;
     },
     [signInUser.pending]: () => {
-      console.log('pending');
+      console.log('SignInUser pending');
     },
     [signInUser.rejected]: () => {
-      console.log('rejected');
+      console.log('SignInUser rejected');
     },
   },
 });
