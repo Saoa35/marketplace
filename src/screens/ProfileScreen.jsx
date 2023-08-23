@@ -11,15 +11,21 @@ import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
 import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUserAvatar} from '../redux/slices/userSlice';
 
-function ProfileScreen({userData, userAvatar, setUserAvatar}) {
+function ProfileScreen() {
   const [userName, setUserName] = useState(fullName);
   const [userEmail, setEmail] = useState(email);
   const [phone, setPhone] = useState(phoneNumber);
 
   const navigation = useNavigation();
-
-  const {fullName, email, phoneNumber} = userData.user;
+  const dispatch = useDispatch();
+  const {userData, userAvatar} = useSelector(state => state.user);
+  const {token} = useSelector(state => state.user.userData);
+  const {fullName, email, phoneNumber} = useSelector(
+    state => state.user.userData.user,
+  );
 
   useEffect(() => {
     setUserName(fullName);
@@ -51,18 +57,7 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
     });
 
     try {
-      const response = await axios.post(
-        'https://rn.binary-travel-app.xyz/api/v1/images',
-        formdata,
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
-
-      setUserAvatar(response.data.url);
+      dispatch(setUserAvatar(formdata, token));
 
       const resp = await axios.patch(
         'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
@@ -78,21 +73,21 @@ function ProfileScreen({userData, userAvatar, setUserAvatar}) {
         },
       );
 
-      if (resp.status === 200 && response.status === 201) {
-        Snackbar.show({
-          text: 'User settings updated successfully',
-          backgroundColor: COLORS.green,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      } else {
-        Snackbar.show({
-          text: 'Something went wrong :(',
-          backgroundColor: COLORS.red,
-          duration: Snackbar.LENGTH_LONG,
-          marginBottom: 100,
-        });
-      }
+      // if (resp.status === 200 && response.status === 201) {
+      Snackbar.show({
+        text: 'User settings updated successfully',
+        backgroundColor: COLORS.green,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+      // } else {
+      //   Snackbar.show({
+      //     text: 'Something went wrong :(',
+      //     backgroundColor: COLORS.red,
+      //     duration: Snackbar.LENGTH_LONG,
+      //     marginBottom: 100,
+      //   });
+      // }
     } catch (error) {
       Snackbar.show({
         text: error.message,

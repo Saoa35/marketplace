@@ -75,24 +75,20 @@ export const productsSlice = createSlice({
   },
   extraReducers: {
     [getGoodsList.fulfilled]: (state, action) => {
-      console.log('GoodsList fulfilled');
       state.goodsList = action.payload;
     },
-    [getGoodsList.pending]: () => console.log('GoodsList pending'),
-    [getGoodsList.rejected]: () => console.log('GoodsList rejected'),
+    [getGoodsList.pending]: () => {},
+    [getGoodsList.rejected]: () => {},
 
     [getCurrentProduct.fulfilled]: (state, action) => {
-      console.log('CurrentProduct fulfilled');
       state.currentProduct = action.payload;
     },
-    [getCurrentProduct.pending]: () => console.log('CurrentProduct pending'),
-    [getCurrentProduct.rejected]: () => console.log('CurrentProduct rejected'),
+    [getCurrentProduct.pending]: () => {},
+    [getCurrentProduct.rejected]: () => {},
 
-    [deleteCurrentProduct.fulfilled]: () =>
-      console.log('DeleteProduct fulfilled'),
-    [deleteCurrentProduct.pending]: () => console.log('DeleteProduct pending'),
-    [deleteCurrentProduct.rejected]: () =>
-      console.log('DeleteProduct rejected'),
+    [deleteCurrentProduct.fulfilled]: () => {},
+    [deleteCurrentProduct.pending]: () => {},
+    [deleteCurrentProduct.rejected]: () => {},
   },
 });
 

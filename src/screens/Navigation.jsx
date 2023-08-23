@@ -16,32 +16,9 @@ import AddProductScreen from './AddProductScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = ({
-  // productId,
-  // setProductId,
-  userAvatar,
-  setUserAvatar,
-}) => {
+const TabNavigation = () => {
   return (
     <Tab.Navigator>
-      {/* <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({focused}) => (
-            <Entypo
-              name="home"
-              color={focused ? COLORS.green : COLORS.gray}
-              size={25}
-            />
-          ),
-          tabBarActiveTintColor: COLORS.green,
-          tabBarInactiveTintColor: COLORS.gray,
-          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
-        }}>
-        {() => <HomeScreen productId={productId} setProductId={setProductId} />}
-      </Tab.Screen> */}
-
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -62,6 +39,7 @@ const TabNavigation = ({
 
       <Tab.Screen
         name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({focused}) => (
@@ -74,39 +52,20 @@ const TabNavigation = ({
           tabBarActiveTintColor: COLORS.green,
           tabBarInactiveTintColor: COLORS.gray,
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
-        }}>
-        {() => (
-          <ProfileScreen
-            userAvatar={userAvatar}
-            setUserAvatar={setUserAvatar}
-          />
-        )}
-      </Tab.Screen>
+        }}
+      />
 
       <Tab.Screen
         name="ProductDetails"
+        component={ProductDetailsScreen}
         options={() => ({
           tabBarButton: () => null,
           headerTitle: 'Product Details',
           headerLeft: () => <LeftArrowButton />,
-        })}>
-        {() => (
-          // <ProductDetailsScreen productId={productId} userAvatar={userAvatar} />
-          <ProductDetailsScreen userAvatar={userAvatar} />
-        )}
-      </Tab.Screen>
+        })}
+      />
 
       <Tab.Screen
-        name="AddProduct"
-        options={() => ({
-          tabBarButton: () => null,
-          headerTitle: 'Add Product',
-          headerLeft: () => <LeftArrowButton />,
-        })}>
-        {() => <AddProductScreen userData={userData} />}
-      </Tab.Screen>
-
-      {/* <Tab.Screen
         name="AddProduct"
         component={AddProductScreen}
         options={() => ({
@@ -114,15 +73,12 @@ const TabNavigation = ({
           headerTitle: 'Add Product',
           headerLeft: () => <LeftArrowButton />,
         })}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };
 
 function Navigation() {
-  // const [productId, setProductId] = useState('');
-  const [userAvatar, setUserAvatar] = useState(null);
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -138,16 +94,11 @@ function Navigation() {
           options={{headerShown: false}}
         />
 
-        <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
-          {() => (
-            <TabNavigation
-              // productId={productId}
-              // setProductId={setProductId}
-              userAvatar={userAvatar}
-              setUserAvatar={setUserAvatar}
-            />
-          )}
-        </Stack.Screen>
+        <Stack.Screen
+          name={'TabNavigation'}
+          component={TabNavigation}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const initialState = {
   userData: {},
+  userAvatar: null,
 };
 
 export const signUpUser = createAsyncThunk(
@@ -41,6 +42,30 @@ export const signInUser = createAsyncThunk(
   },
 );
 
+export const setUserAvatar = createAsyncThunk(
+  'userAvatar/setUserAvatar',
+  async ({formdata, token}, {rejectWithValue}) => {
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/images',
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      console.log(response.data.url);
+
+      return response.data.url;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -66,6 +91,17 @@ export const userSlice = createSlice({
     },
     [signInUser.rejected]: () => {
       console.log('SignInUser rejected');
+    },
+
+    [setUserAvatar.fulfilled]: (state, action) => {
+      console.log('setUserAvatar fulfilled');
+      state.userAvatar = action.payload;
+    },
+    [setUserAvatar.pending]: () => {
+      console.log('setUserAvatar pending');
+    },
+    [setUserAvatar.rejected]: () => {
+      console.log('setUserAvatar rejected');
     },
   },
 });

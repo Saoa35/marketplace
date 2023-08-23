@@ -21,7 +21,7 @@ import {
   getCurrentProduct,
 } from '../redux/slices/productsSlice';
 
-function ProductDetailsScreen({userAvatar}) {
+function ProductDetailsScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
@@ -31,6 +31,7 @@ function ProductDetailsScreen({userAvatar}) {
   const {userData} = useSelector(state => state.user);
   const {productId} = useSelector(state => state.products);
   const {currentProduct} = useSelector(state => state.products);
+  const {userAvatar} = useSelector(state => state.user);
 
   const getProduct = () => {
     try {
