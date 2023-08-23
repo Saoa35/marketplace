@@ -3,11 +3,11 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {useNavigation} from '@react-navigation/native';
 
-export const ProductItem = memo(({setProductId, item}) => {
+export const ProductItem = memo(({item}) => {
   const navigation = useNavigation();
 
   const handleCurrentProduct = () => {
-    setProductId(item.id);
+    // setProductId(item.id);
     navigation.navigate('ProductDetails');
   };
 

@@ -17,14 +17,14 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = ({
-  productId,
-  setProductId,
+  // productId,
+  // setProductId,
   userAvatar,
   setUserAvatar,
 }) => {
   return (
     <Tab.Navigator>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Home"
         options={{
           tabBarLabel: 'Home',
@@ -40,7 +40,25 @@ const TabNavigation = ({
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}>
         {() => <HomeScreen productId={productId} setProductId={setProductId} />}
-      </Tab.Screen>
+      </Tab.Screen> */}
+
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({focused}) => (
+            <Entypo
+              name="home"
+              color={focused ? COLORS.green : COLORS.gray}
+              size={25}
+            />
+          ),
+          tabBarActiveTintColor: COLORS.green,
+          tabBarInactiveTintColor: COLORS.gray,
+          tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
+        }}
+      />
 
       <Tab.Screen
         name="Profile"
@@ -73,7 +91,8 @@ const TabNavigation = ({
           headerLeft: () => <LeftArrowButton />,
         })}>
         {() => (
-          <ProductDetailsScreen productId={productId} userAvatar={userAvatar} />
+          // <ProductDetailsScreen productId={productId} userAvatar={userAvatar} />
+          <ProductDetailsScreen userAvatar={userAvatar} />
         )}
       </Tab.Screen>
 
@@ -101,7 +120,7 @@ const TabNavigation = ({
 };
 
 function Navigation() {
-  const [productId, setProductId] = useState('');
+  // const [productId, setProductId] = useState('');
   const [userAvatar, setUserAvatar] = useState(null);
 
   return (
@@ -122,8 +141,8 @@ function Navigation() {
         <Stack.Screen name={'TabNavigation'} options={{headerShown: false}}>
           {() => (
             <TabNavigation
-              productId={productId}
-              setProductId={setProductId}
+              // productId={productId}
+              // setProductId={setProductId}
               userAvatar={userAvatar}
               setUserAvatar={setUserAvatar}
             />

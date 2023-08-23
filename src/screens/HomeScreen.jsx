@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SearchInput} from '../components/inputs/SearchInput';
 import {getGoodsList} from '../redux/slices/productsSlice';
 
-function HomeScreen({setProductId}) {
+function HomeScreen() {
   const [filteredList, setfilteredList] = useState([]);
 
   const [searchValue, setSearchValue] = useState('');
@@ -60,9 +60,7 @@ function HomeScreen({setProductId}) {
               width: 350,
               alignItems: 'center',
             }}
-            renderItem={({item}) => (
-              <ProductItem setProductId={setProductId} item={item} />
-            )}
+            renderItem={({item}) => <ProductItem item={item} />}
           />
         </View>
       )}

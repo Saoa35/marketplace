@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const initialState = {
   goodsList: [],
+  productId: null,
 };
 
 export const getGoodsList = createAsyncThunk(
@@ -30,7 +31,9 @@ export const getGoodsList = createAsyncThunk(
 export const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    setProductId: (state, action) => (state.productId = action.payload),
+  },
   extraReducers: {
     [getGoodsList.fulfilled]: (state, action) => {
       console.log('fulfilled');
