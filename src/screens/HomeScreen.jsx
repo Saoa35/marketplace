@@ -2,55 +2,49 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
-import {SearchInput} from '../components/inputs/SearchInput';
-import Snackbar from 'react-native-snackbar';
 import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
 import {useDispatch, useSelector} from 'react-redux';
+import Snackbar from 'react-native-snackbar';
+import {SearchInput} from '../components/inputs/SearchInput';
+import {getGoodsList} from '../redux/slices/productsSlice';
 
 function HomeScreen({setProductId}) {
-  // const [goodsList, setGoodsList] = useState([]);
   const [filteredList, setfilteredList] = useState([]);
 
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const {token} = useSelector(state => state.user.userData.token);
+  const dispatch = useDispatch();
 
-  const getGoods = () => {
-    try {
-      // if (response.status === 200) {
-      //   setGoodsList(response.data);
-      //   setfilteredList(response.data);
-      // } else {
-      //   Snackbar.show({
-      //     text: 'Something went wrong :(',
-      //     backgroundColor: COLORS.red,
-      //     duration: Snackbar.LENGTH_LONG,
-      //     marginBottom: 100,
-      //   });
-      // }
+  const {token} = useSelector(state => state.user.userData);
+  const {goodsList} = useSelector(state => state.products);
 
-      setIsLoading(false);
-    } catch (error) {
-      Snackbar.show({
-        text: error.message,
-        backgroundColor: COLORS.red,
-        duration: Snackbar.LENGTH_LONG,
-        marginBottom: 100,
-      });
+  // const getGoods = () => {
+  //   try {
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     Snackbar.show({
+  //       text: error.message,
+  //       backgroundColor: COLORS.red,
+  //       duration: Snackbar.LENGTH_LONG,
+  //       marginBottom: 100,
+  //     });
 
-      setIsLoading(false);
+  //     setIsLoading(false);
 
-      console.log(error);
-    }
-  };
+  //     console.log(error.message);
+  //   }
+  // };
 
   useEffect(() => {
     setIsLoading(true);
-    getGoods();
-  }, []);
+    dispatch(getGoodsList({token}));
+    setfilteredList(goodsList);
+    // getGoods();
+    setIsLoading(false);
+  }, [filteredList]);
 
   const searchFilter = text => {
     if (text) {
@@ -81,7 +75,10 @@ function HomeScreen({setProductId}) {
             data={filteredList}
             keyExtractor={item => item.id}
             refreshControl={
-              <RefreshControl refreshing={isLoading} onRefresh={getGoods} />
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={() => setfilteredList(goodsList)}
+              />
             }
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<EmptyList />}

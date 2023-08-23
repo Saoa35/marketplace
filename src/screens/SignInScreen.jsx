@@ -20,7 +20,7 @@ function SignInScreen() {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user.userData);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!userEmail || !password) {
       Snackbar.show({
         text: 'Email and Password fields are required',
@@ -30,7 +30,7 @@ function SignInScreen() {
       });
     } else {
       try {
-        dispatch(signInUser({userEmail, password}));
+        await dispatch(signInUser({userEmail, password}));
 
         setEmail('');
         setPassword('');
@@ -45,9 +45,11 @@ function SignInScreen() {
     }
   };
 
-  if (userData.token) {
-    navigation.navigate('TabNavigation');
-  }
+  useEffect(() => {
+    if (userData.token) {
+      navigation.navigate('TabNavigation');
+    }
+  }, [userData.token]);
 
   return (
     <View style={styles.mainContainer}>
