@@ -1,53 +1,64 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
 import {EmailInput} from '../components/inputs/EmailInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
+import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {signInUser} from '../redux/slices/userSlice';
 
 // email: arthur.dent@mail.com
 // password: pa$Sword
 
-function SignInScreen() {
+function SignInScreen({setuserData}) {
   const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userData = useSelector(state => state.user.userData);
 
-  const handleSubmit = () => {
-    if (!userEmail || !password) {
-      Snackbar.show({
-        text: 'Email and Password fields are required',
-        backgroundColor: COLORS.red,
-        duration: Snackbar.LENGTH_LONG,
-        marginBottom: 100,
-      });
-    } else {
-      try {
-        dispatch(signInUser({userEmail, password}));
-
-        setEmail('');
-        setPassword('');
-      } catch (error) {
+  const handleSubmit = async () => {
+    try {
+      if (!userEmail || !password) {
         Snackbar.show({
-          text: error.message,
+          text: 'Email and Password fields are required',
           backgroundColor: COLORS.red,
           duration: Snackbar.LENGTH_LONG,
           marginBottom: 100,
         });
+      } else {
+        const response = await axios.post(
+          'https://rn.binary-travel-app.xyz/api/v1/auth/sign-in',
+          {
+            email: userEmail,
+            password: password,
+          },
+        );
+
+        if (response.status === 200) {
+          setuserData(response.data);
+
+          navigation.navigate('TabNavigation');
+        } else {
+          Snackbar.show({
+            text: 'Something went wrong :(',
+            backgroundColor: COLORS.red,
+            duration: Snackbar.LENGTH_LONG,
+            marginBottom: 100,
+          });
+        }
       }
+    } catch (error) {
+      Snackbar.show({
+        text: error.message,
+        backgroundColor: COLORS.red,
+        duration: Snackbar.LENGTH_LONG,
+        marginBottom: 100,
+      });
+
+      console.log(error.message);
     }
   };
-
-  if (userData.token) {
-    navigation.navigate('TabNavigation');
-  }
 
   return (
     <View style={styles.mainContainer}>

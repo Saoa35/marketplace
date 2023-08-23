@@ -3,34 +3,41 @@ import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
 import {SearchInput} from '../components/inputs/SearchInput';
+import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
-import {useDispatch, useSelector} from 'react-redux';
 
-function HomeScreen({setProductId}) {
-  // const [goodsList, setGoodsList] = useState([]);
+function HomeScreen({userData, setProductId}) {
+  const [goodsList, setGoodsList] = useState([]);
   const [filteredList, setfilteredList] = useState([]);
 
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const {token} = useSelector(state => state.user.userData.token);
-
-  const getGoods = () => {
+  const getGoods = async () => {
     try {
-      // if (response.status === 200) {
-      //   setGoodsList(response.data);
-      //   setfilteredList(response.data);
-      // } else {
-      //   Snackbar.show({
-      //     text: 'Something went wrong :(',
-      //     backgroundColor: COLORS.red,
-      //     duration: Snackbar.LENGTH_LONG,
-      //     marginBottom: 100,
-      //   });
-      // }
+      const response = await axios.get(
+        'https://rn.binary-travel-app.xyz/api/v1/products',
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        setGoodsList(response.data);
+        setfilteredList(response.data);
+      } else {
+        Snackbar.show({
+          text: 'Something went wrong :(',
+          backgroundColor: COLORS.red,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+      }
 
       setIsLoading(false);
     } catch (error) {

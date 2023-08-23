@@ -30,13 +30,11 @@ export const getGoodsList = createAsyncThunk(
 export const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    setGoodsList: (state, action) => {
+  reducers: {},
+  extraReducers: {
+    [getGoodsList.fulfilled]: (state, action) => {
       state.goodsList = action.payload;
     },
-  },
-  extraReducers: {
-    [getGoodsList.fulfilled]: () => console.log('fulfilled'),
     [getGoodsList.pending]: () => console.log('pending'),
     [getGoodsList.rejected]: () => console.log('rejected'),
   },
