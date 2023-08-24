@@ -9,7 +9,7 @@ import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
 
-function SignUpScreen() {
+function SignUpScreen({setuserData}) {
   const [userName, setUserName] = useState('');
   const [userEmail, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -27,6 +27,16 @@ function SignUpScreen() {
           marginBottom: 50,
         });
       } else {
+        const response = await axios.post(
+          'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+          {
+            fullName: userName,
+            email: userEmail,
+            phoneNumber: phone,
+            password: password,
+          },
+        );
+
         if (response.status === 200) {
           setuserData(response.data);
           navigation.navigate('TabNavigation');
