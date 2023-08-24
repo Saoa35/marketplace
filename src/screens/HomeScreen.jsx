@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {ProductItem} from '../components/ProductItem';
 import {PlusButton} from '../components/buttons/PlusButton';
@@ -8,6 +8,7 @@ import Snackbar from 'react-native-snackbar';
 import {COLORS} from '../styles/styles';
 import {Loader} from '../components/Loader';
 import {EmptyList} from '../components/EmptyList';
+import {useFocusEffect} from '@react-navigation/native';
 
 function HomeScreen({userData, setProductId}) {
   const [goodsList, setGoodsList] = useState([]);
@@ -54,10 +55,12 @@ function HomeScreen({userData, setProductId}) {
     }
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    getGoods();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsLoading(true);
+      getGoods();
+    }, []),
+  );
 
   const searchFilter = text => {
     if (text) {
