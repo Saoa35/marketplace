@@ -122,33 +122,32 @@ function AddProductScreen() {
 
         setIsLoading(true);
 
-        if (response.status === 201) {
-          setIsLoading(false);
+        // if (response.status === 201) {
 
-          setProductName('');
-          setProductPrice('');
-          setProductDescription('');
-          setIsRequired(false);
-          setProductImages([]);
-
-          navigation.navigate('Home');
-
-          Snackbar.show({
-            text: `Product ${productName} was successfuly added`,
-            backgroundColor: COLORS.green,
-            duration: Snackbar.LENGTH_LONG,
-            marginBottom: 100,
-          });
-        } else {
-          Snackbar.show({
-            text: 'Something went wrong :(',
-            backgroundColor: COLORS.red,
-            duration: Snackbar.LENGTH_LONG,
-            marginBottom: 100,
-          });
-        }
+        setProductName('');
+        setProductPrice('');
+        setProductDescription('');
+        setIsRequired(false);
+        setProductImages([]);
 
         setIsLoading(false);
+
+        navigation.navigate('Home');
+
+        Snackbar.show({
+          text: `Product ${productName} was successfuly added`,
+          backgroundColor: COLORS.green,
+          duration: Snackbar.LENGTH_LONG,
+          marginBottom: 100,
+        });
+        // } else {
+        //   Snackbar.show({
+        //     text: 'Something went wrong :(',
+        //     backgroundColor: COLORS.red,
+        //     duration: Snackbar.LENGTH_LONG,
+        //     marginBottom: 100,
+        //   });
+        // }
       }
     } catch (error) {
       Snackbar.show({
