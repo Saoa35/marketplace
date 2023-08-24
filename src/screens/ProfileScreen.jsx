@@ -30,7 +30,7 @@ function ProfileScreen() {
     setUserName(fullName);
     setEmail(email);
     setPhone(phoneNumber);
-  }, [fullName, email, phoneNumber]);
+  }, [fullName, email, phoneNumber, userAvatar]);
 
   const options = {
     title: 'Select Image',

@@ -10,8 +10,10 @@ import Snackbar from 'react-native-snackbar';
 import axios from 'axios';
 import {Loader} from '../components/Loader';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {useDispatch, useSelector} from 'react-redux';
+import {setProductImage} from '../redux/slices/productsSlice';
 
-function AddProductScreen({userData}) {
+function AddProductScreen() {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
@@ -22,6 +24,11 @@ function AddProductScreen({userData}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const userData = useSelector(state => state.user.userData);
+  const {token} = useSelector(state => state.user.userData);
+  const {productImage} = useSelector(state => state.products);
 
   const options = {
     title: 'Select Image',
@@ -47,21 +54,12 @@ function AddProductScreen({userData}) {
     });
 
     try {
-      const response = await axios.post(
-        'https://rn.binary-travel-app.xyz/api/v1/images',
-        formdata,
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
+      dispatch(setProductImage({formdata, token}));
 
-      addPhoto(response.data.url, response.data.id);
+      addPhoto(productImage.url, productImage.id);
 
       if (productImages.length < 5) {
-        setImagesList([...imagesList, response.data.id]);
+        setImagesList([...imagesList, productImage.id]);
       }
     } catch (error) {
       Snackbar.show({

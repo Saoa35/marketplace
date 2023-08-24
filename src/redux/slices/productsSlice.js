@@ -5,6 +5,7 @@ const initialState = {
   goodsList: [],
   productId: null,
   currentProduct: null,
+  productImage: null,
 };
 
 export const getGoodsList = createAsyncThunk(
@@ -65,6 +66,30 @@ export const deleteCurrentProduct = createAsyncThunk(
   },
 );
 
+export const setProductImage = createAsyncThunk(
+  'productImage/setProductImage',
+  async ({formdata, token}, {rejectWithValue}) => {
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/images',
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      console.log('setProductImage: ', response.data);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
 export const productsSlice = createSlice({
   name: 'products',
   initialState,
@@ -89,6 +114,12 @@ export const productsSlice = createSlice({
     [deleteCurrentProduct.fulfilled]: () => {},
     [deleteCurrentProduct.pending]: () => {},
     [deleteCurrentProduct.rejected]: () => {},
+
+    [setProductImage.fulfilled]: (state, action) => {
+      state.productImage = action.payload;
+    },
+    [setProductImage.pending]: () => {},
+    [setProductImage.rejected]: () => {},
   },
 });
 
