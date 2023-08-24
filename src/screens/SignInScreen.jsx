@@ -8,6 +8,9 @@ import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
 
+// email: din@mail.com
+// password: Din$jarin
+
 // email: arthur.dent@mail.com
 // password: pa$Sword
 
