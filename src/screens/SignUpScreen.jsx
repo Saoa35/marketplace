@@ -8,8 +8,6 @@ import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {signUpUser} from '../redux/slices/userSlice';
 
 function SignUpScreen() {
   const [userName, setUserName] = useState('');
@@ -18,7 +16,6 @@ function SignUpScreen() {
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
@@ -30,13 +27,10 @@ function SignUpScreen() {
           marginBottom: 50,
         });
       } else {
-        dispatch(signUpUser(userName, userEmail, phone, password));
-
-        //   if (response.status === 200) {
-        //     setuserData(response.data);
-        //     console.log(response.data);
-        //     navigation.navigate('TabNavigation');
-        //   }
+        if (response.status === 200) {
+          setuserData(response.data);
+          navigation.navigate('TabNavigation');
+        }
       }
     } catch (error) {
       Snackbar.show({
@@ -90,8 +84,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.title,
-    marginTop: '5%',
-    marginBottom: '5%',
+    marginTop: 50,
+    marginBottom: 70,
     textAlign: 'center',
     fontSize: 34,
     fontWeight: '700',
@@ -102,10 +96,10 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     alignItems: 'center',
-    marginTop: '1%',
+    marginTop: 50,
   },
   bottomTextWrapper: {
-    marginTop: '2%',
+    marginTop: 20,
     flexDirection: 'row',
   },
   bottomText: {

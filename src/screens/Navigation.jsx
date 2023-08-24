@@ -98,16 +98,6 @@ const TabNavigation = ({
         })}>
         {() => <AddProductScreen userData={userData} />}
       </Tab.Screen>
-
-      {/* <Tab.Screen
-        name="AddProduct"
-        component={AddProductScreen}
-        options={() => ({
-          tabBarButton: () => null,
-          headerTitle: 'Add Product',
-          headerLeft: () => <LeftArrowButton />,
-        })}
-      /> */}
     </Tab.Navigator>
   );
 };
