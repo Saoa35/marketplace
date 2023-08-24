@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.title,
-    marginTop: 50,
-    marginBottom: 70,
+    marginTop: '5%',
+    marginBottom: '5%',
     textAlign: 'center',
     fontSize: 34,
     fontWeight: '700',
@@ -102,10 +102,10 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: '1%',
   },
   bottomTextWrapper: {
-    marginTop: 20,
+    marginTop: '2%',
     flexDirection: 'row',
   },
   bottomText: {
