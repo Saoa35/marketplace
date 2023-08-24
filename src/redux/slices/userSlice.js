@@ -4,6 +4,7 @@ import axios from 'axios';
 const initialState = {
   userData: {},
   userAvatar: null,
+  avatarId: null,
 };
 
 export const signUpUser = createAsyncThunk(
@@ -57,11 +58,36 @@ export const setUserAvatar = createAsyncThunk(
         },
       );
 
-      console.log(response.data.url);
+      console.log('setUserAvatar: ', response.data);
 
-      return response.data.url;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const patchUserAvatar = createAsyncThunk(
+  'userAvatar/patchUserAvatar',
+  async ({userName, phone, token, avatarId}, {rejectWithValue}) => {
+    try {
+      const resp = await axios.patch(
+        'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
+        {
+          fullName: userName,
+          phoneNumber: phone,
+          avatar: avatarId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      console.log('patchUserAvatar: ', resp.data);
+    } catch (error) {
+      return rejectWithValue(error.resp.data);
     }
   },
 );
@@ -95,13 +121,24 @@ export const userSlice = createSlice({
 
     [setUserAvatar.fulfilled]: (state, action) => {
       console.log('setUserAvatar fulfilled');
-      state.userAvatar = action.payload;
+      state.userAvatar = action.payload.url;
+      state.avatarId = action.payload.id;
     },
     [setUserAvatar.pending]: () => {
       console.log('setUserAvatar pending');
     },
     [setUserAvatar.rejected]: () => {
       console.log('setUserAvatar rejected');
+    },
+
+    [patchUserAvatar.fulfilled]: () => {
+      console.log('patchUserAvatar fulfilled');
+    },
+    [patchUserAvatar.pending]: () => {
+      console.log('patchUserAvatar pending');
+    },
+    [patchUserAvatar.rejected]: () => {
+      console.log('patchUserAvatar rejected');
     },
   },
 });

@@ -12,7 +12,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {setUserAvatar} from '../redux/slices/userSlice';
+import {patchUserAvatar, setUserAvatar} from '../redux/slices/userSlice';
 
 function ProfileScreen() {
   const [userName, setUserName] = useState(fullName);
@@ -21,7 +21,7 @@ function ProfileScreen() {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {userData, userAvatar} = useSelector(state => state.user);
+  const {userData, userAvatar, avatarId} = useSelector(state => state.user);
   const {token} = useSelector(state => state.user.userData);
   const {fullName, email, phoneNumber} = useSelector(
     state => state.user.userData.user,
@@ -57,37 +57,16 @@ function ProfileScreen() {
     });
 
     try {
-      dispatch(setUserAvatar(formdata, token));
+      dispatch(setUserAvatar({formdata, token}));
 
-      const resp = await axios.patch(
-        'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
-        {
-          fullName: userName,
-          phoneNumber: phone,
-          avatar: response.data.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        },
-      );
+      dispatch(patchUserAvatar({userName, phone, token, avatarId}));
 
-      // if (resp.status === 200 && response.status === 201) {
       Snackbar.show({
         text: 'User settings updated successfully',
         backgroundColor: COLORS.green,
         duration: Snackbar.LENGTH_LONG,
         marginBottom: 100,
       });
-      // } else {
-      //   Snackbar.show({
-      //     text: 'Something went wrong :(',
-      //     backgroundColor: COLORS.red,
-      //     duration: Snackbar.LENGTH_LONG,
-      //     marginBottom: 100,
-      //   });
-      // }
     } catch (error) {
       Snackbar.show({
         text: error.message,

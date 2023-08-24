@@ -20,7 +20,7 @@ function SignInScreen() {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user.userData);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!userEmail || !password) {
       Snackbar.show({
         text: 'Email and Password fields are required',
@@ -30,7 +30,7 @@ function SignInScreen() {
       });
     } else {
       try {
-        await dispatch(signInUser({userEmail, password}));
+        dispatch(signInUser({userEmail, password}));
 
         setEmail('');
         setPassword('');
