@@ -167,6 +167,7 @@ function ProductDetailsScreen({userData, productId, userAvatar}) {
               style={{width: 70, height: 70, borderRadius: 9999}}
             />
           ) : userAvatar ? (
+            // sellerId === userId && userAvatar !== null ?
             <Image
               source={{uri: userAvatar}}
               style={{width: 70, height: 70, borderRadius: 9999}}
