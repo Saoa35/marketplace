@@ -10,16 +10,23 @@ const initialState = {
 export const signUpUser = createAsyncThunk(
   'userData/signUpUser',
   async ({userName, userEmail, phone, password}) => {
-    const response = await axios.post(
-      'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
-      {
-        fullName: userName,
-        email: userEmail,
-        phoneNumber: phone,
-        password: password,
-      },
-    );
-    dispatch(setUserData(response.data));
+    try {
+      const response = await axios.post(
+        'https://rn.binary-travel-app.xyz/api/v1/auth/sign-up',
+        {
+          fullName: userName,
+          email: userEmail,
+          phoneNumber: phone,
+          password: password,
+        },
+      );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   },
 );
 
@@ -58,8 +65,6 @@ export const setUserAvatar = createAsyncThunk(
         },
       );
 
-      console.log('setUserAvatar: ', response.data);
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -71,7 +76,7 @@ export const patchUserAvatar = createAsyncThunk(
   'userAvatar/patchUserAvatar',
   async ({userName, phone, token, avatarId}, {rejectWithValue}) => {
     try {
-      const resp = await axios.patch(
+      await axios.patch(
         'https://rn.binary-travel-app.xyz/api/v1/auth/authenticated-user',
         {
           fullName: userName,
@@ -84,8 +89,6 @@ export const patchUserAvatar = createAsyncThunk(
           },
         },
       );
-
-      console.log('patchUserAvatar: ', resp.data);
     } catch (error) {
       return rejectWithValue(error.resp.data);
     }
@@ -97,49 +100,33 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // [signUpUser.fulfilled]: (state, action) => {
-    //   state.status = 'fulfilled';
-    //   state.userData = action.payload;
-    // },
-    // [signUpUser.pending]: state => {
-    //   state.status = 'pending';
-    // },
-    // [signUpUser.rejected]: state => {
-    //   state.status = 'rejected';
-    // },
-
-    [signInUser.fulfilled]: (state, action) => {
-      console.log('SignInUser fulfilled');
+    [signUpUser.fulfilled]: (state, action) => {
+      console.log('signUpUser fulfilled');
       state.userData = action.payload;
     },
-    [signInUser.pending]: () => {
-      console.log('SignInUser pending');
+    [signUpUser.pending]: () => {
+      console.log('signUpUser pending');
     },
-    [signInUser.rejected]: () => {
-      console.log('SignInUser rejected');
+    [signUpUser.rejected]: () => {
+      console.log('signUpUser rejected');
     },
 
+    [signInUser.fulfilled]: (state, action) => {
+      state.userData = action.payload;
+    },
+    [signInUser.pending]: () => {},
+    [signInUser.rejected]: () => {},
+
     [setUserAvatar.fulfilled]: (state, action) => {
-      console.log('setUserAvatar fulfilled');
       state.userAvatar = action.payload.url;
       state.avatarId = action.payload.id;
     },
-    [setUserAvatar.pending]: () => {
-      console.log('setUserAvatar pending');
-    },
-    [setUserAvatar.rejected]: () => {
-      console.log('setUserAvatar rejected');
-    },
+    [setUserAvatar.pending]: () => {},
+    [setUserAvatar.rejected]: () => {},
 
-    [patchUserAvatar.fulfilled]: () => {
-      console.log('patchUserAvatar fulfilled');
-    },
-    [patchUserAvatar.pending]: () => {
-      console.log('patchUserAvatar pending');
-    },
-    [patchUserAvatar.rejected]: () => {
-      console.log('patchUserAvatar rejected');
-    },
+    [patchUserAvatar.fulfilled]: () => {},
+    [patchUserAvatar.pending]: () => {},
+    [patchUserAvatar.rejected]: () => {},
   },
 });
 

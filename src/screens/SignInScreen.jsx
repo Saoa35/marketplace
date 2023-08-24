@@ -9,6 +9,9 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {signInUser} from '../redux/slices/userSlice';
 
+// email: din@mail.com
+// password: Din$jarin
+
 // email: arthur.dent@mail.com
 // password: pa$Sword
 

@@ -10,7 +10,6 @@ import {MainButton} from '../components/buttons/MainButton';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
-import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {patchUserAvatar, setUserAvatar} from '../redux/slices/userSlice';
 

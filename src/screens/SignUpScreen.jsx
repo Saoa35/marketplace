@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {COLORS} from '../styles/styles';
 import {MainButton} from '../components/buttons/MainButton';
@@ -8,7 +8,7 @@ import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {signUpUser} from '../redux/slices/userSlice';
 
 function SignUpScreen() {
@@ -19,6 +19,7 @@ function SignUpScreen() {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const userData = useSelector(state => state.user.userData);
 
   const handleSubmit = async () => {
     try {
@@ -32,11 +33,10 @@ function SignUpScreen() {
       } else {
         dispatch(signUpUser(userName, userEmail, phone, password));
 
-        //   if (response.status === 200) {
-        //     setuserData(response.data);
-        //     console.log(response.data);
-        //     navigation.navigate('TabNavigation');
-        //   }
+        setUserName('');
+        setEmail('');
+        setPassword('');
+        setPhone('');
       }
     } catch (error) {
       Snackbar.show({
@@ -49,6 +49,12 @@ function SignUpScreen() {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    if (userData.token) {
+      navigation.navigate('TabNavigation');
+    }
+  }, [userData.token]);
 
   return (
     <View style={styles.mainContainer}>
