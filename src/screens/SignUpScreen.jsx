@@ -8,6 +8,7 @@ import {PhoneInput} from '../components/inputs/PhoneInput';
 import {PasswordInput} from '../components/inputs/PasswordInput';
 import Snackbar from 'react-native-snackbar';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 function SignUpScreen({setuserData}) {
   const [userName, setUserName] = useState('');
